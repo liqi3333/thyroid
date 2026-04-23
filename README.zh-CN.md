@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Thyroid TNM Tool</h1>
-  <p><strong>甲状腺癌 TNM 分期与治疗计划网页工具</strong></p>
+  <p><strong>甲状腺癌 TNM 分期与治疗计划网页工具，含 PC 原版与独立手机版</strong></p>
   <p><strong>简体中文</strong> | <a href="README.md">English</a></p>
   <p>
     <a href="https://github.com/liqi3333/thyroid/releases/latest"><img alt="最新版本" src="https://img.shields.io/github/v/release/liqi3333/thyroid?display_name=tag&label=release" /></a>
@@ -9,18 +9,20 @@
   </p>
   <p>
     <a href="https://liqi3333.github.io/thyroid/"><img alt="在线打开" src="https://img.shields.io/badge/在线打开-网页-0ea5e9?style=for-the-badge" /></a>
+    <a href="https://liqi3333.github.io/thyroid/mobile.html"><img alt="打开手机版网页" src="https://img.shields.io/badge/打开-手机版网页-f59e0b?style=for-the-badge" /></a>
     <a href="https://github.com/liqi3333/thyroid/releases/latest"><img alt="下载 HTML" src="https://img.shields.io/badge/下载-最新%20HTML-10b981?style=for-the-badge" /></a>
   </p>
 </div>
 
 ## 项目简介
 
-这个项目把甲状腺癌 TNM 分期、治疗计划与随访建议的单文件 HTML 工具，整理成了一个可公开访问、可自动发布、可在线使用的 GitHub 网页项目。
+这个项目把甲状腺癌 TNM 分期、治疗计划与随访建议工具，整理成了一个同时提供 PC 原版网页和独立手机版网页的 GitHub 项目。
 
 ## 入口
 
 - GitHub 仓库：<https://github.com/liqi3333/thyroid>
-- 在线页面：<https://liqi3333.github.io/thyroid/>
+- 在线 PC 页面：<https://liqi3333.github.io/thyroid/>
+- 在线手机版页面：<https://liqi3333.github.io/thyroid/mobile.html>
 - 最新 Release：<https://github.com/liqi3333/thyroid/releases/latest>
 
 ## 本地使用
@@ -34,14 +36,15 @@ npm run build:html
 产物：
 
 ```text
-dist-html/Thyroid-TNM-Tool-1.0.0.html
+dist-html/Thyroid-TNM-Tool-1.0.1.html
+dist-html/Thyroid-TNM-Tool-mobile-1.0.1.html
 ```
 
 ## 自动化流程
 
-- 推送到 `main`：自动构建 HTML，并上传 workflow artifact
-- 推送形如 `v1.0.0` 的标签：自动生成独立 HTML 文件并发布到 GitHub Releases
-- GitHub Pages 直接托管根目录 `index.html`
+- 推送到 `main`：自动构建 HTML，并上传 PC + 手机版 artifact
+- 推送形如 `v1.0.1` 的标签：自动生成 PC/手机版独立 HTML 文件并发布到 GitHub Releases
+- GitHub Pages 直接托管 `index.html` 和 `mobile.html`
 
 ## 说明
 

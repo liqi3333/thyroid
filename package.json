@@ -1,7 +1,7 @@
 {
   "name": "thyroid-tnm-tool",
-  "version": "1.0.0",
-  "description": "Standalone thyroid cancer TNM staging and treatment planning web app | 甲状腺癌 TNM 分期与治疗计划网页工具",
+  "version": "1.0.1",
+  "description": "Desktop and mobile thyroid cancer TNM staging web app | 甲状腺癌 TNM 分期桌面与手机版网页工具",
   "author": {
     "name": "shbsrh"
   },

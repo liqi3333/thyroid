@@ -1,17 +1,17 @@
 # Thyroid TNM Tool Release Notes | 更新日志
 
-This release provides a standalone HTML file for thyroid cancer TNM staging, treatment planning, and follow-up reference.
+This release provides both a standalone desktop HTML file and a separate mobile-optimized HTML file for thyroid cancer TNM staging, treatment planning, and follow-up reference.
 
-本版本提供甲状腺癌 TNM 分期、治疗计划与随访参考的独立 HTML 文件。
+本版本提供甲状腺癌 TNM 分期、治疗计划与随访参考的 PC 独立 HTML 文件，以及单独优化的手机版 HTML 文件。
 
 ## Highlights | 本版亮点
 
-- Standalone HTML tool
-- Direct browser usage
+- Standalone desktop HTML tool
+- Separate mobile HTML tool
 - GitHub Pages online deployment
 
-- 单文件 HTML 工具
-- 可直接浏览器打开
+- PC 单文件 HTML 工具
+- 独立手机版 HTML 工具
 - 已接入 GitHub Pages 在线部署
 
 ## Notes | 注意事项

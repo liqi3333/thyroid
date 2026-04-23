@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>甲状腺癌分期·治疗计划（手机版） · 美国癌症联合委员会（AJCC）第8版</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+        body {
+            background: #f5f9fc;
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            max-width: 960px;
+            width: 100%;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(0, 20, 40, 0.08);
+            padding: 28px 24px 32px;
+            border: 1px solid #e6edf2;
+        }
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 500;
+            color: #0b2b3d;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .subhead {
+            font-size: 0.95rem;
+            color: #3a6275;
+            margin-bottom: 24px;
+            border-left: 4px solid #1e7e83;
+            padding-left: 16px;
+            background: #f0f6fa;
+            border-radius: 0 12px 12px 0;
+            padding: 10px 16px;
+        }
+        .grid-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 24px;
+            margin-bottom: 28px;
+        }
+        .select-group {
+            flex: 1 1 180px;
+            min-width: 160px;
+        }
+        .select-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #1e5468;
+            margin-bottom: 6px;
+        }
+        .select-group select {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border: 1.5px solid #cddde5;
+            border-radius: 20px;
+            background-color: white;
+            color: #103845;
+            font-weight: 500;
+            cursor: pointer;
+            transition: border 0.2s, box-shadow 0.2s;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%231e7e83" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+        }
+        .select-group select:focus {
+            outline: none;
+            border-color: #1e7e83;
+            box-shadow: 0 0 0 3px rgba(30, 126, 131, 0.15);
+        }
+        .select-group select:disabled {
+            background-color: #f2f6f9;
+            color: #6b8a9a;
+            border-color: #cbdae2;
+            opacity: 0.8;
+        }
+        .stage-result {
+            background: linear-gradient(105deg, #e2f0f5 0%, #d4e9ef 100%);
+            border-radius: 24px;
+            padding: 24px 28px;
+            margin: 16px 0 20px;
+            border: 1px solid #b8d4de;
+        }
+        .stage-badge {
+            display: inline-block;
+            background: #0b2b3d;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 4px 16px;
+            border-radius: 40px;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+        }
+        .stage-value {
+            font-size: 4.2rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #0a3342;
+            margin: 8px 0 4px;
+        }
+        .stage-desc {
+            font-size: 1rem;
+            color: #1a4b5e;
+            opacity: 0.9;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+        .tnm-summary {
+            font-size: 0.95rem;
+            background: rgba(255,255,255,0.5);
+            padding: 8px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            color: #1e5468;
+            font-weight: 500;
+        }
+        /* 折叠面板 */
+        .management-section {
+            margin-top: 12px;
+            border-radius: 20px;
+            background: #f9fcfd;
+            border: 1px solid #d1e2e9;
+            overflow: hidden;
+        }
+        .collapse-header {
+            background: #eaf1f6;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+            border-bottom: 1px solid transparent;
+        }
+        .collapse-header:hover {
+            background: #deeaf1;
+        }
+        .collapse-header h3 {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #134353;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .copy-btn {
+            background: white;
+            border: 1px solid #1e7e83;
+            color: #1e7e83;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .copy-btn:hover {
+            background: #1e7e83;
+            color: white;
+        }
+        .collapse-icon {
+            font-size: 1.6rem;
+            color: #1e7e83;
+            transition: transform 0.3s;
+        }
+        .collapse-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: #ffffff;
+        }
+        .management-panel {
+            padding: 20px 0 24px;
+            color: #1a3d4e;
+        }
+        .management-panel h4 {
+            font-size: 1.1rem;
+            margin: 18px 0 10px;
+            color: #0b4b5e;
+            border-bottom: 1.5px solid #bdd7e2;
+            padding-bottom: 5px;
+        }
+        .management-panel ul {
+            padding-left: 22px;
+            margin: 8px 0;
+        }
+        .management-panel li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        .highlight {
+            background: #e3f0f5;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .note-box {
+            background: #f3f9fc;
+            border-left: 5px solid #1e7e83;
+            padding: 14px 18px;
+            border-radius: 16px;
+            margin: 18px 0 6px;
+        }
+        .legend {
+            margin-top: 24px;
+            font-size: 0.8rem;
+            background: #f9fbfc;
+            border-radius: 18px;
+            padding: 14px 18px;
+            border: 1px dashed #b6cfdb;
+        }
+        .footnote {
+            font-size: 0.75rem;
+            text-align: right;
+            color: #5b8393;
+            margin-top: 12px;
+        }
+        button {
+            background: transparent;
+            border: none;
+            color: #1e7e83;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: underline dotted #5f9da3;
+        }
+        .reset-btn {
+            margin-left: auto;
+        }
+
+        .version-switch {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            background: #f1f8fa;
+            border: 1px solid #d5e8ec;
+            border-radius: 18px;
+        }
+        .version-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #1e7e83;
+            color: white;
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+        .switch-link {
+            color: #14596b;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+        }
+        .mobile-hero {
+            margin-bottom: 18px;
+            padding: 12px 14px;
+            background: linear-gradient(180deg, #f7fcfd 0%, #eef8fa 100%);
+            border: 1px solid #d8eaef;
+            border-radius: 18px;
+            color: #2b5f72;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+        .mobile-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .shortcut-btn {
+            border: 1px solid #cfe3e8;
+            background: #fff;
+            color: #14596b;
+            border-radius: 18px;
+            padding: 12px 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(30, 126, 131, 0.08);
+        }
+        .mobile-bottom-bar {
+            position: sticky;
+            bottom: 10px;
+            display: none;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 18px;
+            padding: 10px;
+            background: rgba(255,255,255,0.94);
+            backdrop-filter: blur(12px);
+            border: 1px solid #d2e7ea;
+            border-radius: 20px;
+            box-shadow: 0 10px 24px rgba(26, 77, 94, 0.14);
+        }
+        .mobile-bottom-bar button {
+            background: #f4fafb;
+            border: 1px solid #d8eaef;
+            border-radius: 16px;
+            padding: 10px 8px;
+            color: #14596b;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+                align-items: flex-start;
+                min-height: 100vh;
+                background: linear-gradient(180deg, #f6fbfd 0%, #f1f7fa 48%, #eef7f8 100%);
+            }
+            .card {
+                max-width: 100%;
+                min-height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+                border: none;
+                padding: 16px 14px 96px;
+            }
+            h1 {
+                font-size: 1.35rem;
+                line-height: 1.28;
+                flex-wrap: wrap;
+            }
+            .subhead {
+                font-size: 0.9rem;
+                padding: 10px 12px;
+                margin-bottom: 18px;
+            }
+            .mobile-shortcuts {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .grid-panel {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 14px;
+                margin-bottom: 22px;
+            }
+            .select-group {
+                min-width: 0;
+            }
+            .select-group label {
+                font-size: 0.76rem;
+                margin-bottom: 8px;
+            }
+            .select-group select {
+                padding: 15px 42px 15px 14px;
+                font-size: 16px;
+                border-radius: 18px;
+            }
+            .stage-result {
+                padding: 18px 16px;
+                border-radius: 20px;
+            }
+            .stage-badge {
+                font-size: 0.76rem;
+                padding: 5px 12px;
+            }
+            .stage-value {
+                font-size: 2.6rem;
+            }
+            .stage-desc {
+                font-size: 0.95rem;
+                line-height: 1.45;
+            }
+            .tnm-summary {
+                width: 100%;
+                border-radius: 16px;
+            }
+            .collapse-header {
+                padding: 14px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .collapse-header h3 {
+                font-size: 1rem;
+                line-height: 1.45;
+                flex-wrap: wrap;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .copy-btn {
+                padding: 9px 14px;
+                font-size: 0.88rem;
+            }
+            .collapse-content {
+                padding: 0 14px;
+            }
+            .management-panel {
+                padding: 16px 0 18px;
+            }
+            .management-panel h4 {
+                font-size: 0.98rem;
+            }
+            .legend {
+                padding: 14px;
+                font-size: 0.8rem;
+            }
+            .legend > div {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 10px;
+            }
+            .reset-btn {
+                margin-left: 0;
+            }
+            .footnote {
+                text-align: left;
+                line-height: 1.5;
+            }
+            .mobile-bottom-bar {
+                display: grid;
+            }
+        }
+        @media (max-width: 420px) {
+            .mobile-shortcuts {
+                grid-template-columns: 1fr;
+            }
+            .mobile-bottom-bar {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="version-switch">
+        <span class="version-tag">📱 手机版</span>
+        <a class="switch-link" href="./index.html">切回 PC 原版</a>
+    </div>
+    <div class="mobile-hero">
+        这是为手机浏览器单独优化的版本，保留原始 PC 网页不变。适合收藏到手机桌面，随手查看分期与治疗随访建议。
+    </div>
+    <div class="mobile-shortcuts">
+        <button class="shortcut-btn" data-action="reset">↻ 重置</button>
+        <button class="shortcut-btn" data-action="toggle">📋 展开治疗</button>
+        <button class="shortcut-btn" data-action="copy">📄 复制方案</button>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <h1>
+            <span>🩺 甲状腺癌分期·治疗决策</span>
+            <span style="font-size: 0.9rem; background: #cfdde5; color: #1a4a5a; padding: 2px 14px; border-radius: 30px;">美国癌症联合委员会（AJCC）第8版</span>
+        </h1>
+    </div>
+    <div class="subhead">
+        ⚡ 下拉选择 · 实时分期 · 点击下方展开个体化治疗与随访计划（含中文术语）
+    </div>
+
+    <!-- 下拉菜单区 -->
+    <div class="grid-panel">
+        <div class="select-group">
+            <label>🧬 病理类型</label>
+            <select id="histology" aria-label="病理类型">
+                <option value="DTC" selected>分化型癌（DTC）· 乳头状/滤泡状</option>
+                <option value="MTC">甲状腺髓样癌（MTC）</option>
+                <option value="ATC">未分化癌（ATC）</option>
+            </select>
+        </div>
+        <div class="select-group">
+            <label>🎂 诊断年龄（仅分化型癌DTC）</label>
+            <select id="ageGroup" aria-label="年龄分组">
+                <option value="<55" selected>＜ 55 岁</option>
+                <option value="≥55">≥ 55 岁</option>
+            </select>
+        </div>
+        <div class="select-group">
+            <label>📏 原发肿瘤（T）</label>
+            <select id="tStage" aria-label="T分期">
+                <option value="T1a" selected>T1a（≤1cm，局限于甲状腺内）</option>
+                <option value="T1b">T1b（＞1~2cm，局限于甲状腺内）</option>
+                <option value="T2">T2（＞2~4cm，局限于甲状腺内）</option>
+                <option value="T3a">T3a（＞4cm，局限于甲状腺内）</option>
+                <option value="T3b">T3b（任何大小，侵犯带状肌）</option>
+                <option value="T4a">T4a（侵犯皮下/喉/气管/食管/喉返神经）</option>
+                <option value="T4b">T4b（侵犯椎前筋膜/包绕颈动脉/纵隔血管）</option>
+            </select>
+        </div>
+        <div class="select-group">
+            <label>🔬 区域淋巴结（N）</label>
+            <select id="nStage" aria-label="N分期">
+                <option value="N0" selected>N0（无区域淋巴结转移）</option>
+                <option value="N1a">N1a（Ⅵ区/Ⅶ区淋巴结转移）</option>
+                <option value="N1b">N1b（侧颈部/咽后淋巴结转移）</option>
+            </select>
+        </div>
+        <div class="select-group">
+            <label>🌍 远处转移（M）</label>
+            <select id="mStage" aria-label="M分期">
+                <option value="M0" selected>M0（无远处转移）</option>
+                <option value="M1">M1（有远处转移）</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 分期结果显示区 -->
+    <div class="stage-result">
+        <span class="stage-badge">🎯 当前分期</span>
+        <div class="stage-value" id="stageDisplay">Ⅰ 期</div>
+        <div class="stage-desc" id="stageDesc">Ⅰ期 · 预后良好</div>
+        <div style="margin-top: 14px;">
+            <span class="tnm-summary" id="tnmSummary">T1a N0 M0</span>
+        </div>
+    </div>
+
+    <!-- 折叠面板：治疗与随访计划 (含复制按钮) -->
+    <div class="management-section">
+        <div class="collapse-header" id="collapseHeader">
+            <h3>
+                <span>📋 治疗计划 · 随访 · 用药调整</span>
+                <span style="font-size:0.9rem; background:#cddde5; padding:2px 10px; border-radius:20px;">基于2025动态风险评估</span>
+            </h3>
+            <div class="header-actions">
+                <button class="copy-btn" id="copyPlanBtn" title="复制全部治疗建议">📄 复制内容</button>
+                <span class="collapse-icon" id="collapseIcon">▼</span>
+            </div>
+        </div>
+        <div class="collapse-content" id="collapseContent">
+            <div class="management-panel" id="managementPanel">
+                <!-- 动态生成个体化方案 -->
+                正在根据当前分期生成个体化方案...
+            </div>
+        </div>
+    </div>
+
+    <!-- 规则摘要（已全部中文化） -->
+    <div class="legend">
+        <div style="display: flex; justify-content: space-between;">
+            <strong>📌 美国癌症联合委员会（AJCC）第8版核心 · 点击折叠区查看治疗计划</strong>
+            <button id="resetDefaultBtn" class="reset-btn">↻ 重置典型组合</button>
+        </div>
+        <ul style="margin-top: 10px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 4px 16px;">
+            <li>分化型癌（DTC）＜55岁：无远处转移（M0）→ Ⅰ期，有远处转移（M1）→ Ⅱ期</li>
+            <li>分化型癌（DTC）≥55岁：T1-2N0→Ⅰ期，T1-3N1/T3a→Ⅱ期，T4a→Ⅲ期，T4b→ⅣA期，M1→ⅣB期</li>
+            <li>髓样癌（MTC）：T1N0→Ⅰ期，T2-3N0→Ⅱ期，N1a→Ⅲ期，N1b→ⅣA期，T4b→ⅣB期，M1→ⅣC期</li>
+            <li>未分化癌（ATC）：均为Ⅳ期（ⅣA/ⅣB/ⅣC）</li>
+        </ul>
+    </div>
+    <div class="footnote">
+        * 治疗建议基于2025美国甲状腺协会（ATA）/中国临床肿瘤学会（CSCO）指南 · 仅供专业参考
+    </div>
+    <div class="mobile-bottom-bar">
+        <button data-action="top">⬆️ 顶部</button>
+        <button data-action="reset">↻ 重置</button>
+        <button data-action="toggle">📋 治疗</button>
+        <button data-action="copy">📄 复制</button>
+    </div>
+</div>
+
+<script>
+    (function(){
+        // DOM元素
+        const histologySelect = document.getElementById('histology');
+        const ageGroupSelect = document.getElementById('ageGroup');
+        const tSelect = document.getElementById('tStage');
+        const nSelect = document.getElementById('nStage');
+        const mSelect = document.getElementById('mStage');
+        const stageDisplay = document.getElementById('stageDisplay');
+        const stageDesc = document.getElementById('stageDesc');
+        const tnmSummary = document.getElementById('tnmSummary');
+        const managementPanel = document.getElementById('managementPanel');
+
+        // 折叠功能
+        const collapseHeader = document.getElementById('collapseHeader');
+        const collapseContent = document.getElementById('collapseContent');
+        const collapseIcon = document.getElementById('collapseIcon');
+        const copyBtn = document.getElementById('copyPlanBtn');
+        
+        let expanded = false;
+        collapseHeader.addEventListener('click', function(e) {
+            // 防止点击复制按钮时触发折叠
+            if (e.target.closest('.copy-btn')) return;
+            expanded = !expanded;
+            if(expanded) {
+                collapseContent.style.maxHeight = collapseContent.scrollHeight + 200 + "px";
+                collapseIcon.style.transform = "rotate(180deg)";
+            } else {
+                collapseContent.style.maxHeight = "0";
+                collapseIcon.style.transform = "rotate(0deg)";
+            }
+        });
+
+        // 复制功能：复制managementPanel内的纯文本
+        copyBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const textToCopy = managementPanel.innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('✅ 治疗计划已复制到剪贴板');
+            }).catch(() => {
+                // 降级方案
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('✅ 治疗计划已复制（兼容模式）');
+            });
+        });
+
+        // 解析T
+        function parseT(tVal) {
+            let main = tVal, sub = '';
+            if(tVal.startsWith('T1a')) { main='T1'; sub='a'; }
+            else if(tVal.startsWith('T1b')) { main='T1'; sub='b'; }
+            else if(tVal.startsWith('T2')) { main='T2'; }
+            else if(tVal.startsWith('T3a')) { main='T3'; sub='a'; }
+            else if(tVal.startsWith('T3b')) { main='T3'; sub='b'; }
+            else if(tVal.startsWith('T4a')) { main='T4'; sub='a'; }
+            else if(tVal.startsWith('T4b')) { main='T4'; sub='b'; }
+            return { exact: tVal, main, sub };
+        }
+
+        // 核心分期计算
+        function computeStage() {
+            const hist = histologySelect.value;
+            const age = ageGroupSelect.value;
+            const tVal = tSelect.value;
+            const nVal = nSelect.value;
+            const mVal = mSelect.value;
+            const tParsed = parseT(tVal);
+            const isM1 = (mVal === 'M1');
+            const tnmShort = `${tVal} ${nVal} ${mVal}`;
+            let stage = '', desc = '';
+
+            if (hist === 'DTC') {
+                if (age === '<55') {
+                    stage = isM1 ? 'Ⅱ 期' : 'Ⅰ 期';
+                    desc = isM1 ? 'Ⅱ期 · 远处转移（M1）' : 'Ⅰ期 · 无远处转移（M0）';
+                } else {
+                    const tMain = tParsed.main, tSub = tParsed.sub;
+                    const anyN1 = (nVal === 'N1a' || nVal === 'N1b');
+                    const nIsN0 = (nVal === 'N0');
+                    if (isM1) { stage = 'ⅣB 期'; desc = 'ⅣB期 · 远处转移（M1）'; }
+                    else if (tMain==='T4' && tSub==='b') { stage = 'ⅣA 期'; desc = 'ⅣA期 · T4b 任何N M0'; }
+                    else if (tMain==='T4' && tSub==='a') { stage = 'Ⅲ 期'; desc = 'Ⅲ期 · T4a'; }
+                    else if (tMain==='T3' && tSub==='a') { stage = 'Ⅱ 期'; desc = 'Ⅱ期 · T3a（＞4cm）'; }
+                    else if ((tMain==='T1'||tMain==='T2'||(tMain==='T3'&&tSub==='b')) && anyN1) { stage = 'Ⅱ 期'; desc = 'Ⅱ期 · T1-3伴淋巴结转移（N1）'; }
+                    else if ((tMain==='T1'||tMain==='T2') && nIsN0) { stage = 'Ⅰ 期'; desc = 'Ⅰ期 · T1-2 N0 M0'; }
+                    else if (tMain==='T3' && tSub==='b' && nIsN0) { stage = 'Ⅱ 期'; desc = 'Ⅱ期 · T3b N0'; }
+                    else { stage = '待核实'; desc = '组合异常'; }
+                }
+            } else if (hist === 'MTC') {
+                const tMain = tParsed.main, tSub = tParsed.sub;
+                const nIsN0 = (nVal==='N0'), nIsN1a = (nVal==='N1a'), nIsN1b = (nVal==='N1b');
+                if (isM1) { stage='ⅣC 期'; desc='ⅣC期 · 远处转移（M1）'; }
+                else if (tMain==='T4'&&tSub==='b') { stage='ⅣB 期'; desc='T4b 任何N M0'; }
+                else if (tMain==='T4'&&tSub==='a') { stage='ⅣA 期'; desc='T4a 任何N M0'; }
+                else if ((tMain==='T1'||tMain==='T2'||tMain==='T3') && nIsN1b) { stage='ⅣA 期'; desc='T1-3 N1b M0'; }
+                else if ((tMain==='T1'||tMain==='T2'||tMain==='T3') && nIsN1a) { stage='Ⅲ 期'; desc='T1-3 N1a M0'; }
+                else if ((tMain==='T2'||tMain==='T3') && nIsN0) { stage='Ⅱ 期'; desc='T2-3 N0 M0'; }
+                else if (tMain==='T1' && nIsN0) { stage='Ⅰ 期'; desc='T1 N0 M0'; }
+                else { stage='组合校验'; desc=''; }
+            } else if (hist === 'ATC') {
+                const tMain = tParsed.main, tSub = tParsed.sub;
+                const nIsN0 = (nVal==='N0'), nIsN1 = (nVal==='N1a'||nVal==='N1b');
+                if (isM1) { stage='ⅣC 期'; desc='远处转移（M1）'; }
+                else if ((tMain==='T3'&&tSub==='b')||tMain==='T4') { stage='ⅣB 期'; desc='T3b/T4 任何N M0'; }
+                else if ((tMain==='T1'||tMain==='T2'||(tMain==='T3'&&tSub==='a')) && nIsN1) { stage='ⅣB 期'; desc='T1-3a N1 M0'; }
+                else if ((tMain==='T1'||tMain==='T2'||(tMain==='T3'&&tSub==='a')) && nIsN0) { stage='ⅣA 期'; desc='T1-3a N0 M0'; }
+                else { stage='Ⅳ期'; desc='未分化癌（ATC）'; }
+            }
+            return { stage, desc, tnm: tnmShort };
+        }
+
+        // 生成管理建议（全部中文术语优先，括号英文）
+        function generateManagementHTML() {
+            const hist = histologySelect.value;
+            const age = ageGroupSelect.value;
+            const tVal = tSelect.value;
+            const nVal = nSelect.value;
+            const mVal = mSelect.value;
+            const tParsed = parseT(tVal);
+            const isM1 = (mVal === 'M1');
+            const stageObj = computeStage();
+            const stageStr = stageObj.stage;
+
+            let riskLevel = 'low';
+            if (hist === 'DTC') {
+                if (stageStr.includes('Ⅳ') || isM1) riskLevel = 'advanced';
+                else if (stageStr.includes('Ⅲ') || (stageStr.includes('Ⅱ') && age==='≥55' && (tParsed.main==='T3' || nVal!=='N0'))) riskLevel = 'high';
+                else if (stageStr.includes('Ⅱ') || (stageStr.includes('Ⅰ') && (tParsed.main==='T2'||nVal!=='N0'))) riskLevel = 'intermediate';
+                else riskLevel = 'low';
+            } else if (hist === 'MTC') {
+                if (isM1) riskLevel = 'advanced';
+                else if (stageStr.includes('Ⅳ')||stageStr.includes('Ⅲ')) riskLevel = 'high';
+                else if (stageStr.includes('Ⅱ')) riskLevel = 'intermediate';
+                else riskLevel = 'low';
+            } else { riskLevel = 'advanced'; }
+
+            let html = '';
+            html += `<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;"><span style="background:#0b2b3d; color:white; padding:6px 16px; border-radius:30px;">📊 分期: ${stageStr} · ${stageObj.desc}</span>`;
+            html += `<span style="background:#d9e6ed; padding:6px 16px; border-radius:30px;">🏷️ 风险层级: ${riskLevel==='low'?'低危':riskLevel==='intermediate'?'中危':riskLevel==='high'?'高危':'晚期/转移性'}</span></div>`;
+
+            if (hist === 'DTC') {
+                if (riskLevel === 'low') {
+                    html += `<h4>💊 用药计划 · 促甲状腺素（TSH）抑制</h4><ul><li><span class="highlight">促甲状腺素（TSH）目标</span>: 0.5–2.0 mU/L（正常低限即可，无需严格抑制）。</li><li>左甲状腺素（L-T4）替代治疗，调整剂量后4-6周复查甲状腺功能。</li></ul>`;
+                    html += `<h4>🩺 随访与复查指标</h4><ul><li><strong>颈部超声</strong>: 术后6-12个月首次，后每年一次至5年。</li><li><strong>甲状腺球蛋白（Tg）+ 甲状腺球蛋白抗体（TgAb）</strong>: 每6-12个月检测，稳定后每年一次。</li><li>若甲状腺球蛋白（Tg）持续＜0.2 ng/mL且超声阴性，属于疗效满意。</li></ul>`;
+                    html += `<h4>🔄 如何调整用药</h4><ul><li>若长期（＞5年）无复发迹象，促甲状腺素（TSH）可放宽至正常范围（0.5–2.5 mU/L）。</li><li>甲状腺球蛋白（Tg）升高或超声可疑 → 加强抑制（促甲状腺素TSH 0.1–0.5 mU/L）并进一步检查。</li></ul>`;
+                } else if (riskLevel === 'intermediate') {
+                    html += `<h4>💊 用药计划</h4><ul><li><span class="highlight">促甲状腺素（TSH）抑制目标</span>: 0.1–0.5 mU/L。</li><li>多数患者推荐术后放射性碘（RAI）清甲治疗。</li><li>左甲状腺素（L-T4）剂量根据促甲状腺素（TSH）精细调整。</li></ul>`;
+                    html += `<h4>🩺 随访计划</h4><ul><li>术后6个月行颈部超声、甲状腺球蛋白（Tg）/甲状腺球蛋白抗体（TgAb）。</li><li>高危特征者9-12个月后行诊断性全身显像（Dx-WBS）。</li><li>若疗效满意，可逐渐放宽促甲状腺素（TSH）至0.5 mU/L左右。</li></ul>`;
+                    html += `<h4>📈 指标调整策略</h4><ul><li>甲状腺球蛋白（Tg）持续可测但稳定 → 维持抑制，缩短复查间隔。</li><li>甲状腺球蛋白（Tg）上升或新发淋巴结 → 影像学评估，必要时二次手术/放射性碘（RAI）。</li></ul>`;
+                } else if (riskLevel === 'high') {
+                    html += `<h4>💊 强化促甲状腺素（TSH）抑制</h4><ul><li><span class="highlight">促甲状腺素（TSH）＜0.1 mU/L</span>（注意监测心脏及骨骼风险）。</li><li>常规行放射性碘（RAI）治疗，部分需多次放射性碘（RAI）。</li></ul>`;
+                    html += `<h4>🩺 密切随访</h4><ul><li>术后3个月即开始复查（超声+甲状腺球蛋白Tg）。</li><li>每6个月评估，必要时正电子发射断层扫描（PET-CT）寻找病灶。</li><li>若达“疗效满意”，促甲状腺素（TSH）可升至0.1–0.5 mU/L。</li></ul>`;
+                    html += `<div class="note-box">⚠️ 若出现结构性复发，需多学科会诊考虑手术/外放疗/靶向治疗。</div>`;
+                } else if (riskLevel === 'advanced') {
+                    html += `<h4>🧬 晚期/转移性分化型甲状腺癌（DTC）</h4><ul><li>优先行基因检测（RET、NTRK、BRAF等）。</li><li><strong>靶向治疗</strong>: RET融合→普拉替尼；NTRK融合→拉罗替尼；无突变→仑伐替尼/索拉非尼。</li><li>促甲状腺素（TSH）在不引起甲亢前提下尽量抑制。</li></ul>`;
+                    html += `<h4>📋 随访重点</h4><ul><li>每2-3个月影像评估疗效，监测血压、蛋白尿等靶向药副作用。</li></ul>`;
+                }
+            } else if (hist === 'MTC') {
+                html += `<h4>🧪 核心标志物</h4><ul><li>降钙素（Ctn）、癌胚抗原（CEA）是随访关键。</li><li>术后降钙素（Ctn）倍增时间提示预后。</li></ul>`;
+                if (riskLevel === 'low' || riskLevel === 'intermediate') {
+                    html += `<h4>💊 甲状腺素替代</h4><ul><li>仅需替代治疗，无需促甲状腺素（TSH）抑制（TSH正常低限）。</li></ul>`;
+                    html += `<h4>📅 随访</h4><ul><li>每6-12个月测降钙素（Ctn）/癌胚抗原（CEA）+颈部超声。</li><li>降钙素（Ctn）升高需寻找复发/转移。</li></ul>`;
+                } else if (riskLevel === 'high') {
+                    html += `<h4>🎯 高危甲状腺髓样癌（MTC）</h4><ul><li>术后降钙素（Ctn）未降至正常范围，需更频繁监测。</li><li>若进展，推荐RET突变检测：塞尔帕替尼/普拉替尼。</li><li>多靶点酪氨酸激酶抑制剂（TKI）：卡博替尼、凡德他尼、安罗替尼。</li></ul>`;
+                } else {
+                    html += `<h4>🌐 晚期甲状腺髓样癌（MTC）</h4><ul><li>系统性靶向治疗为主，参照基因检测结果。</li><li>局部治疗（放疗/介入）缓解症状。</li></ul>`;
+                }
+            } else {
+                html += `<h4>⚡ 未分化癌（ATC）· 紧急处理</h4><ul><li>立即检测BRAF V600E突变。</li><li>突变阳性：达拉非尼+曲美替尼。</li><li>免疫联合治疗（临床试验）带来希望。</li><li>多学科协作（手术/放疗/化疗/靶向）。</li></ul>`;
+                html += `<div class="note-box">所有未分化癌（ATC）均为Ⅳ期，快速启动治疗是核心。</div>`;
+            }
+
+            html += `<div style="margin-top:18px; border-top:1px dashed #abcad6; padding-top:14px;"><strong>📌 动态调整原则（2025）</strong><br>根据治疗反应（疗效满意/生化不全/结构不全）调整促甲状腺素（TSH）抑制强度及随访间隔。若持续疗效满意，可逐渐降低抑制强度并延长复查周期。</div>`;
+            return html;
+        }
+
+        function updateAll() {
+            const stageObj = computeStage();
+            stageDisplay.textContent = stageObj.stage;
+            stageDesc.textContent = stageObj.desc;
+            tnmSummary.textContent = stageObj.tnm;
+
+            managementPanel.innerHTML = generateManagementHTML();
+
+            const resultDiv = document.querySelector('.stage-result');
+            if (stageObj.stage.includes('Ⅳ')) resultDiv.style.background = 'linear-gradient(105deg, #f5e6e8 0%, #f0d9dd 100%)';
+            else if (stageObj.stage.includes('Ⅲ')) resultDiv.style.background = 'linear-gradient(105deg, #fdefe0 0%, #f8e2cf 100%)';
+            else resultDiv.style.background = 'linear-gradient(105deg, #e2f0f5 0%, #d4e9ef 100%)';
+
+            if(expanded) {
+                collapseContent.style.maxHeight = collapseContent.scrollHeight + 200 + "px";
+            }
+        }
+
+        function toggleAgeField() {
+            ageGroupSelect.disabled = (histologySelect.value !== 'DTC');
+            updateAll();
+        }
+
+        function resetToTypical() {
+            histologySelect.value = 'DTC';
+            ageGroupSelect.value = '<55';
+            tSelect.value = 'T1a';
+            nSelect.value = 'N0';
+            mSelect.value = 'M0';
+            toggleAgeField();
+        }
+
+        histologySelect.addEventListener('change', toggleAgeField);
+        ageGroupSelect.addEventListener('change', updateAll);
+        tSelect.addEventListener('change', updateAll);
+        nSelect.addEventListener('change', updateAll);
+        mSelect.addEventListener('change', updateAll);
+        document.getElementById('resetDefaultBtn').addEventListener('click', resetToTypical);
+
+        // 初始化
+        toggleAgeField();
+        collapseContent.style.maxHeight = '0';
+        expanded = false;
+        updateAll();
+    })();
+</script>
+</body>
+</html>
