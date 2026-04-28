@@ -19,12 +19,20 @@
 
 ## Overview
 
-Thyroid TNM Tool packages a single-file clinical HTML interface into a deliverable product with a public GitHub repository, standalone HTML downloads, GitHub Pages deployment, and automated releases.
+Thyroid TNM Tool packages a single-file clinical HTML interface into a deliverable product with a public GitHub repository, standalone HTML downloads, GitHub Pages deployment, and automated release workflows.
 
 It now provides two separate web entry points:
 
 - **PC web version**: preserves the original desktop-style layout
 - **Mobile web version**: a separate `mobile.html` optimized for phone browsers
+
+## Screenshots
+
+### PC Web Version
+![Thyroid TNM Tool - PC Version](https://via.placeholder.com/800x600?text=PC+Web+Version)
+
+### Mobile Web Version
+![Thyroid TNM Tool - Mobile Version](https://via.placeholder.com/400x600?text=Mobile+Web+Version)
 
 ## Why this project is useful
 
