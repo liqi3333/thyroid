@@ -1,598 +1,189 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>甲状腺癌分期·治疗计划 · 美国癌症联合委员会（AJCC）第8版</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-        }
-        body {
-            background: #f5f9fc;
-            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .card {
-            max-width: 960px;
-            width: 100%;
-            background: white;
-            border-radius: 28px;
-            box-shadow: 0 12px 30px rgba(0, 20, 40, 0.08);
-            padding: 28px 24px 32px;
-            border: 1px solid #e6edf2;
-        }
-        h1 {
-            font-size: 1.9rem;
-            font-weight: 500;
-            color: #0b2b3d;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .subhead {
-            font-size: 0.95rem;
-            color: #3a6275;
-            margin-bottom: 24px;
-            border-left: 4px solid #1e7e83;
-            padding-left: 16px;
-            background: #f0f6fa;
-            border-radius: 0 12px 12px 0;
-            padding: 10px 16px;
-        }
-        .grid-panel {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px 24px;
-            margin-bottom: 28px;
-        }
-        .select-group {
-            flex: 1 1 180px;
-            min-width: 160px;
-        }
-        .select-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #1e5468;
-            margin-bottom: 6px;
-        }
-        .select-group select {
-            width: 100%;
-            padding: 12px 14px;
-            font-size: 1rem;
-            border: 1.5px solid #cddde5;
-            border-radius: 20px;
-            background-color: white;
-            color: #103845;
-            font-weight: 500;
-            cursor: pointer;
-            transition: border 0.2s, box-shadow 0.2s;
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%231e7e83" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            background-size: 16px;
-        }
-        .select-group select:focus {
-            outline: none;
-            border-color: #1e7e83;
-            box-shadow: 0 0 0 3px rgba(30, 126, 131, 0.15);
-        }
-        .select-group select:disabled {
-            background-color: #f2f6f9;
-            color: #6b8a9a;
-            border-color: #cbdae2;
-            opacity: 0.8;
-        }
-        .stage-result {
-            background: linear-gradient(105deg, #e2f0f5 0%, #d4e9ef 100%);
-            border-radius: 24px;
-            padding: 24px 28px;
-            margin: 16px 0 20px;
-            border: 1px solid #b8d4de;
-        }
-        .stage-badge {
-            display: inline-block;
-            background: #0b2b3d;
-            color: white;
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 4px 16px;
-            border-radius: 40px;
-            letter-spacing: 0.8px;
-            margin-bottom: 12px;
-        }
-        .stage-value {
-            font-size: 4.2rem;
-            font-weight: 700;
-            line-height: 1.1;
-            color: #0a3342;
-            margin: 8px 0 4px;
-        }
-        .stage-desc {
-            font-size: 1rem;
-            color: #1a4b5e;
-            opacity: 0.9;
-            margin-top: 6px;
-            font-weight: 500;
-        }
-        .tnm-summary {
-            font-size: 0.95rem;
-            background: rgba(255,255,255,0.5);
-            padding: 8px 16px;
-            border-radius: 40px;
-            display: inline-block;
-            color: #1e5468;
-            font-weight: 500;
-        }
-        /* 折叠面板 */
-        .management-section {
-            margin-top: 12px;
-            border-radius: 20px;
-            background: #f9fcfd;
-            border: 1px solid #d1e2e9;
-            overflow: hidden;
-        }
-        .collapse-header {
-            background: #eaf1f6;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            user-select: none;
-            transition: background 0.2s;
-            border-bottom: 1px solid transparent;
-        }
-        .collapse-header:hover {
-            background: #deeaf1;
-        }
-        .collapse-header h3 {
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: #134353;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .copy-btn {
-            background: white;
-            border: 1px solid #1e7e83;
-            color: #1e7e83;
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        .copy-btn:hover {
-            background: #1e7e83;
-            color: white;
-        }
-        .collapse-icon {
-            font-size: 1.6rem;
-            color: #1e7e83;
-            transition: transform 0.3s;
-        }
-        .collapse-content {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out;
-            background: #ffffff;
-        }
-        .management-panel {
-            padding: 20px 0 24px;
-            color: #1a3d4e;
-        }
-        .management-panel h4 {
-            font-size: 1.1rem;
-            margin: 18px 0 10px;
-            color: #0b4b5e;
-            border-bottom: 1.5px solid #bdd7e2;
-            padding-bottom: 5px;
-        }
-        .management-panel ul {
-            padding-left: 22px;
-            margin: 8px 0;
-        }
-        .management-panel li {
-            margin: 8px 0;
-            line-height: 1.5;
-        }
-        .highlight {
-            background: #e3f0f5;
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-        .note-box {
-            background: #f3f9fc;
-            border-left: 5px solid #1e7e83;
-            padding: 14px 18px;
-            border-radius: 16px;
-            margin: 18px 0 6px;
-        }
-        .legend {
-            margin-top: 24px;
-            font-size: 0.8rem;
-            background: #f9fbfc;
-            border-radius: 18px;
-            padding: 14px 18px;
-            border: 1px dashed #b6cfdb;
-        }
-        .footnote {
-            font-size: 0.75rem;
-            text-align: right;
-            color: #5b8393;
-            margin-top: 12px;
-        }
-        button {
-            background: transparent;
-            border: none;
-            color: #1e7e83;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: underline dotted #5f9da3;
-        }
-        .reset-btn {
-            margin-left: auto;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
+  <title>甲状腺癌 AJCC8 分期与随访用药参考工具 · Bilingual</title>
+  <style>
+    :root {
+      --ink:#0b2b3d; --text:#143846; --muted:#607f8d; --brand:#1e7e83; --brand-dark:#0c5b62;
+      --line:#d7e5ec; --soft:#eef6f9; --panel:#fbfdfe; --warn:#8a4f00; --danger:#8a2532; --ok:#236044;
+      --shadow:0 12px 30px rgba(0,20,40,.08);
+    }
+    *{box-sizing:border-box;margin:0}
+    body{background:linear-gradient(160deg,#f4f9fc 0%,#eef5f8 100%);color:var(--text);font-family:'Segoe UI','Roboto','PingFang SC','Microsoft YaHei',system-ui,sans-serif;line-height:1.55;min-height:100vh;padding:22px}
+    .card{width:min(1180px,100%);margin:0 auto;background:white;border:1px solid #e2edf2;border-radius:28px;box-shadow:var(--shadow);padding:28px 26px 34px}
+    .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:14px}
+    h1{font-size:clamp(1.55rem,2.5vw,2.15rem);font-weight:750;color:var(--ink);letter-spacing:-.02em;margin-bottom:8px}
+    .badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;background:#d8e7ee;color:#194a59;font-size:.86rem;font-weight:750;white-space:nowrap}
+    .subhead{border-left:5px solid var(--brand);background:var(--soft);border-radius:0 16px 16px 0;padding:12px 16px;color:#305d70;margin:14px 0 22px}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+    .btn{border:1px solid var(--brand);background:white;color:var(--brand-dark);border-radius:999px;padding:9px 14px;font-weight:750;cursor:pointer;transition:transform .15s ease,background .15s ease,color .15s ease;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+    .btn:hover{background:var(--brand);color:white;transform:translateY(-1px)}
+    .btn.primary{background:var(--brand);color:white}.btn.primary:hover{background:var(--brand-dark)}
+    .btn.secondary-on{background:#173c4b;color:white;border-color:#173c4b}
+    .grid-panel{display:grid;grid-template-columns:repeat(3,minmax(185px,1fr));gap:18px 20px;margin-bottom:22px}
+    .select-group label{display:block;margin-bottom:7px;color:#1b5268;font-size:.79rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
+    select{width:100%;min-height:48px;padding:11px 42px 11px 14px;border:1.5px solid #cbdde5;border-radius:20px;color:#103845;background:white;font-size:1rem;font-weight:650;cursor:pointer;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%231e7e83" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');background-repeat:no-repeat;background-position:right 14px center;background-size:16px}
+    select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(30,126,131,.15)}
+    select:disabled{background-color:#f1f6f8;color:#7a94a2;cursor:not-allowed}
+    .stage-result{display:grid;grid-template-columns:minmax(220px,.9fr) minmax(320px,1.4fr);gap:22px;background:linear-gradient(105deg,#e2f0f5 0%,#d4e9ef 100%);border:1px solid #b8d4de;border-radius:24px;padding:24px;margin:10px 0 20px}
+    .stage-badge{display:inline-block;background:var(--ink);color:white;border-radius:999px;padding:5px 16px;font-weight:850;font-size:.86rem;letter-spacing:.05em;margin-bottom:10px}
+    .stage-value{color:#0a3342;font-size:clamp(3rem,8vw,4.4rem);font-weight:850;line-height:1.05;margin:5px 0}.stage-desc{font-weight:700;color:#1a4b5e;margin-top:6px}
+    .pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.72);border-radius:999px;color:#1d5569;padding:6px 13px;font-weight:750;font-size:.92rem}
+    .summary-box{background:rgba(255,255,255,.56);border:1px solid rgba(255,255,255,.72);border-radius:20px;padding:15px 16px}.summary-box h3{color:#123f50;font-size:1.05rem;margin-bottom:8px}.summary-box ul{padding-left:20px}.summary-box li{margin:5px 0}
+    .section{border:1px solid var(--line);background:#fbfdfe;border-radius:22px;overflow:hidden;margin-top:16px}.section-header{background:#eaf2f6;border-bottom:1px solid #d5e4eb;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;user-select:none}.section-header h2{font-size:1.17rem;color:#123f50;display:flex;gap:8px;align-items:center}.section-content{max-height:0;overflow:hidden;transition:max-height .35s ease;background:white}.section-content.open{max-height:7000px}.section-body{padding:20px}
+    .panel-grid{display:grid;grid-template-columns:repeat(2,minmax(290px,1fr));gap:16px}.mini-card{border:1px solid #d7e5ec;border-radius:18px;padding:16px 18px;background:#fbfdfe}.mini-card.full{grid-column:1/-1}.mini-card h3{font-size:1.05rem;color:#0b4b5e;margin-bottom:10px}.mini-card ul{padding-left:20px}.mini-card li{margin:7px 0}.mini-card.warn-box{border-left:5px solid #c47b00;background:#fff8ec;color:#573800}.mini-card.danger-box{border-left:5px solid #b43f4f;background:#fff1f3;color:#61232b}
+    table.data-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #d7e5ec;border-radius:14px;overflow:hidden;background:white;font-size:.93rem} .data-table th{background:#eaf4f7;color:#153f50;text-align:left;font-weight:850;padding:10px 11px;border-bottom:1px solid #d7e5ec}.data-table td{padding:10px 11px;vertical-align:top;border-bottom:1px solid #e6eff4}.data-table tr:last-child td{border-bottom:0}.data-table td:first-child{font-weight:750;color:#153f50;width:33%}
+    .main-value{font-weight:850;color:#0b2b3d}.small-note{font-size:.78rem;color:#5a7785;line-height:1.45;margin-top:8px;padding-top:8px;border-top:1px dashed #c6d8e0}.explain{display:none}.show-explain .explain{display:block}.explain-toggle-row{display:flex;justify-content:flex-end;margin:-4px 0 12px}.refs{margin-top:24px;border:1px dashed #b8d0dc;background:#fbfdfe;border-radius:18px;padding:15px 18px;font-size:.88rem;color:#3f6576}.refs ul{padding-left:20px;margin-top:6px}.refs a{color:#0b6972}.footnote{margin-top:14px;color:#5b8393;font-size:.78rem;text-align:right}.print-only{display:none}.muted{color:var(--muted);font-size:.88rem}
+    @media(max-width:940px){body{padding:12px}.card{padding:20px 16px 26px;border-radius:22px}.topbar{flex-direction:column}.actions{justify-content:flex-start}.grid-panel{grid-template-columns:1fr}.stage-result{grid-template-columns:1fr}.panel-grid{grid-template-columns:1fr}.mini-card.full{grid-column:auto}}
+    @media print{@page{size:A4;margin:12mm}body{background:white;padding:0;color:black}.card{box-shadow:none;border:none;width:100%;padding:0}.no-print,.actions,.grid-panel,.collapse-icon{display:none!important}.print-only{display:block}.section{break-inside:avoid;border-color:#bbb}.section-header{cursor:default;background:#f2f2f2}.section-content{max-height:none!important;display:block!important;overflow:visible}.stage-result{border:1px solid #999;background:white!important;break-inside:avoid}.mini-card,.summary-box,.refs,table.data-table{border-color:#aaa;background:white;break-inside:avoid}.explain{display:block!important}.small-note{font-size:.72rem;color:#444}a{color:black;text-decoration:none}}
+  </style>
 </head>
 <body>
-<div class="card">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <h1>
-            <span>🩺 甲状腺癌分期·治疗决策</span>
-            <span style="font-size: 0.9rem; background: #cfdde5; color: #1a4a5a; padding: 2px 14px; border-radius: 30px;">美国癌症联合委员会（AJCC）第8版</span>
-        </h1>
+<div class="card" id="app">
+  <div class="topbar">
+    <div><h1 id="title"></h1><span class="badge" id="versionBadge"></span></div>
+    <div class="actions no-print">
+      <button class="btn" id="langBtn" type="button"></button>
+      <button class="btn" id="explainBtn" type="button"></button>
+      <button class="btn" id="printBtn" type="button"></button>
+      <button class="btn" id="copyBtn" type="button"></button>
+      <button class="btn primary" id="resetBtn" type="button"></button>
     </div>
-    <div class="subhead">
-        ⚡ 下拉选择 · 实时分期 · 点击下方展开个体化治疗与随访计划（含中文术语）
-    </div>
+  </div>
+  <div class="subhead" id="subhead"></div>
+  <div class="print-only" id="printMeta"></div>
 
-    <!-- 下拉菜单区 -->
-    <div class="grid-panel">
-        <div class="select-group">
-            <label>🧬 病理类型</label>
-            <select id="histology" aria-label="病理类型">
-                <option value="DTC" selected>分化型癌（DTC）· 乳头状/滤泡状</option>
-                <option value="MTC">甲状腺髓样癌（MTC）</option>
-                <option value="ATC">未分化癌（ATC）</option>
-            </select>
-        </div>
-        <div class="select-group">
-            <label>🎂 诊断年龄（仅分化型癌DTC）</label>
-            <select id="ageGroup" aria-label="年龄分组">
-                <option value="<55" selected>＜ 55 岁</option>
-                <option value="≥55">≥ 55 岁</option>
-            </select>
-        </div>
-        <div class="select-group">
-            <label>📏 原发肿瘤（T）</label>
-            <select id="tStage" aria-label="T分期">
-                <option value="T1a" selected>T1a（≤1cm，局限于甲状腺内）</option>
-                <option value="T1b">T1b（＞1~2cm，局限于甲状腺内）</option>
-                <option value="T2">T2（＞2~4cm，局限于甲状腺内）</option>
-                <option value="T3a">T3a（＞4cm，局限于甲状腺内）</option>
-                <option value="T3b">T3b（任何大小，侵犯带状肌）</option>
-                <option value="T4a">T4a（侵犯皮下/喉/气管/食管/喉返神经）</option>
-                <option value="T4b">T4b（侵犯椎前筋膜/包绕颈动脉/纵隔血管）</option>
-            </select>
-        </div>
-        <div class="select-group">
-            <label>🔬 区域淋巴结（N）</label>
-            <select id="nStage" aria-label="N分期">
-                <option value="N0" selected>N0（无区域淋巴结转移）</option>
-                <option value="N1a">N1a（Ⅵ区/Ⅶ区淋巴结转移）</option>
-                <option value="N1b">N1b（侧颈部/咽后淋巴结转移）</option>
-            </select>
-        </div>
-        <div class="select-group">
-            <label>🌍 远处转移（M）</label>
-            <select id="mStage" aria-label="M分期">
-                <option value="M0" selected>M0（无远处转移）</option>
-                <option value="M1">M1（有远处转移）</option>
-            </select>
-        </div>
-    </div>
+  <div class="grid-panel no-print">
+    <div class="select-group"><label id="histologyLabel" for="histology"></label><select id="histology"></select></div>
+    <div class="select-group"><label id="ageLabel" for="ageGroup"></label><select id="ageGroup"></select></div>
+    <div class="select-group"><label id="tLabel" for="tStage"></label><select id="tStage"></select></div>
+    <div class="select-group"><label id="nLabel" for="nStage"></label><select id="nStage"></select></div>
+    <div class="select-group"><label id="mLabel" for="mStage"></label><select id="mStage"></select></div>
+    <div class="select-group"><label id="surgeryLabel" for="surgeryPlan"></label><select id="surgeryPlan"></select></div>
+  </div>
 
-    <!-- 分期结果显示区 -->
-    <div class="stage-result">
-        <span class="stage-badge">🎯 当前分期</span>
-        <div class="stage-value" id="stageDisplay">Ⅰ 期</div>
-        <div class="stage-desc" id="stageDesc">Ⅰ期 · 预后良好</div>
-        <div style="margin-top: 14px;">
-            <span class="tnm-summary" id="tnmSummary">T1a N0 M0</span>
-        </div>
-    </div>
+  <div class="stage-result" id="stageResult">
+    <div><span class="stage-badge" id="stageBadge"></span><div class="stage-value" id="stageDisplay"></div><div class="stage-desc" id="stageDesc"></div><div class="pill-row"><span class="pill" id="tnmSummary"></span><span class="pill" id="riskSummary"></span></div></div>
+    <div class="summary-box"><h3 id="interpretTitle"></h3><ul id="interpretList"></ul><div class="small-note explain" id="stageExplain"></div></div>
+  </div>
 
-    <!-- 折叠面板：治疗与随访计划 (含复制按钮) -->
-    <div class="management-section">
-        <div class="collapse-header" id="collapseHeader">
-            <h3>
-                <span>📋 治疗计划 · 随访 · 用药调整</span>
-                <span style="font-size:0.9rem; background:#cddde5; padding:2px 10px; border-radius:20px;">基于2025动态风险评估</span>
-            </h3>
-            <div class="header-actions">
-                <button class="copy-btn" id="copyPlanBtn" title="复制全部治疗建议">📄 复制内容</button>
-                <span class="collapse-icon" id="collapseIcon">▼</span>
-            </div>
-        </div>
-        <div class="collapse-content" id="collapseContent">
-            <div class="management-panel" id="managementPanel">
-                <!-- 动态生成个体化方案 -->
-                正在根据当前分期生成个体化方案...
-            </div>
-        </div>
-    </div>
+  <div class="section">
+    <div class="section-header" data-target="clinicalContent"><h2 id="clinicalHeader"></h2><span class="collapse-icon">▼</span></div>
+    <div class="section-content open" id="clinicalContent"><div class="section-body" id="managementPanel"></div></div>
+  </div>
 
-    <!-- 规则摘要（已全部中文化） -->
-    <div class="legend">
-        <div style="display: flex; justify-content: space-between;">
-            <strong>📌 美国癌症联合委员会（AJCC）第8版核心 · 点击折叠区查看治疗计划</strong>
-            <button id="resetDefaultBtn" class="reset-btn">↻ 重置典型组合</button>
-        </div>
-        <ul style="margin-top: 10px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 4px 16px;">
-            <li>分化型癌（DTC）＜55岁：无远处转移（M0）→ Ⅰ期，有远处转移（M1）→ Ⅱ期</li>
-            <li>分化型癌（DTC）≥55岁：T1-2N0→Ⅰ期，T1-3N1/T3a→Ⅱ期，T4a→Ⅲ期，T4b→ⅣA期，M1→ⅣB期</li>
-            <li>髓样癌（MTC）：T1N0→Ⅰ期，T2-3N0→Ⅱ期，N1a→Ⅲ期，N1b→ⅣA期，T4b→ⅣB期，M1→ⅣC期</li>
-            <li>未分化癌（ATC）：均为Ⅳ期（ⅣA/ⅣB/ⅣC）</li>
-        </ul>
-    </div>
-    <div class="footnote">
-        * 治疗建议基于2025美国甲状腺协会（ATA）/中国临床肿瘤学会（CSCO）指南 · 仅供专业参考
-    </div>
+  <div class="section">
+    <div class="section-header" data-target="rulesContent"><h2 id="rulesHeader"></h2><span class="collapse-icon">▼</span></div>
+    <div class="section-content" id="rulesContent"><div class="section-body" id="rulesPanel"></div></div>
+  </div>
+
+  <div class="refs" id="referencesBox"></div>
+  <div class="footnote" id="footnote"></div>
 </div>
 
 <script>
-    (function(){
-        // DOM元素
-        const histologySelect = document.getElementById('histology');
-        const ageGroupSelect = document.getElementById('ageGroup');
-        const tSelect = document.getElementById('tStage');
-        const nSelect = document.getElementById('nStage');
-        const mSelect = document.getElementById('mStage');
-        const stageDisplay = document.getElementById('stageDisplay');
-        const stageDesc = document.getElementById('stageDesc');
-        const tnmSummary = document.getElementById('tnmSummary');
-        const managementPanel = document.getElementById('managementPanel');
-
-        // 折叠功能
-        const collapseHeader = document.getElementById('collapseHeader');
-        const collapseContent = document.getElementById('collapseContent');
-        const collapseIcon = document.getElementById('collapseIcon');
-        const copyBtn = document.getElementById('copyPlanBtn');
-        
-        let expanded = false;
-        collapseHeader.addEventListener('click', function(e) {
-            // 防止点击复制按钮时触发折叠
-            if (e.target.closest('.copy-btn')) return;
-            expanded = !expanded;
-            if(expanded) {
-                collapseContent.style.maxHeight = collapseContent.scrollHeight + 200 + "px";
-                collapseIcon.style.transform = "rotate(180deg)";
-            } else {
-                collapseContent.style.maxHeight = "0";
-                collapseIcon.style.transform = "rotate(0deg)";
-            }
-        });
-
-        // 复制功能：复制managementPanel内的纯文本
-        copyBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const textToCopy = managementPanel.innerText;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert('✅ 治疗计划已复制到剪贴板');
-            }).catch(() => {
-                // 降级方案
-                const textarea = document.createElement('textarea');
-                textarea.value = textToCopy;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                alert('✅ 治疗计划已复制（兼容模式）');
-            });
-        });
-
-        // 解析T
-        function parseT(tVal) {
-            let main = tVal, sub = '';
-            if(tVal.startsWith('T1a')) { main='T1'; sub='a'; }
-            else if(tVal.startsWith('T1b')) { main='T1'; sub='b'; }
-            else if(tVal.startsWith('T2')) { main='T2'; }
-            else if(tVal.startsWith('T3a')) { main='T3'; sub='a'; }
-            else if(tVal.startsWith('T3b')) { main='T3'; sub='b'; }
-            else if(tVal.startsWith('T4a')) { main='T4'; sub='a'; }
-            else if(tVal.startsWith('T4b')) { main='T4'; sub='b'; }
-            return { exact: tVal, main, sub };
-        }
-
-        // 核心分期计算
-        function computeStage() {
-            const hist = histologySelect.value;
-            const age = ageGroupSelect.value;
-            const tVal = tSelect.value;
-            const nVal = nSelect.value;
-            const mVal = mSelect.value;
-            const tParsed = parseT(tVal);
-            const isM1 = (mVal === 'M1');
-            const tnmShort = `${tVal} ${nVal} ${mVal}`;
-            let stage = '', desc = '';
-
-            if (hist === 'DTC') {
-                if (age === '<55') {
-                    stage = isM1 ? 'Ⅱ 期' : 'Ⅰ 期';
-                    desc = isM1 ? 'Ⅱ期 · 远处转移（M1）' : 'Ⅰ期 · 无远处转移（M0）';
-                } else {
-                    const tMain = tParsed.main, tSub = tParsed.sub;
-                    const anyN1 = (nVal === 'N1a' || nVal === 'N1b');
-                    const nIsN0 = (nVal === 'N0');
-                    if (isM1) { stage = 'ⅣB 期'; desc = 'ⅣB期 · 远处转移（M1）'; }
-                    else if (tMain==='T4' && tSub==='b') { stage = 'ⅣA 期'; desc = 'ⅣA期 · T4b 任何N M0'; }
-                    else if (tMain==='T4' && tSub==='a') { stage = 'Ⅲ 期'; desc = 'Ⅲ期 · T4a'; }
-                    else if (tMain==='T3' && tSub==='a') { stage = 'Ⅱ 期'; desc = 'Ⅱ期 · T3a（＞4cm）'; }
-                    else if ((tMain==='T1'||tMain==='T2'||(tMain==='T3'&&tSub==='b')) && anyN1) { stage = 'Ⅱ 期'; desc = 'Ⅱ期 · T1-3伴淋巴结转移（N1）'; }
-                    else if ((tMain==='T1'||tMain==='T2') && nIsN0) { stage = 'Ⅰ 期'; desc = 'Ⅰ期 · T1-2 N0 M0'; }
-                    else if (tMain==='T3' && tSub==='b' && nIsN0) { stage = 'Ⅱ 期'; desc = 'Ⅱ期 · T3b N0'; }
-                    else { stage = '待核实'; desc = '组合异常'; }
-                }
-            } else if (hist === 'MTC') {
-                const tMain = tParsed.main, tSub = tParsed.sub;
-                const nIsN0 = (nVal==='N0'), nIsN1a = (nVal==='N1a'), nIsN1b = (nVal==='N1b');
-                if (isM1) { stage='ⅣC 期'; desc='ⅣC期 · 远处转移（M1）'; }
-                else if (tMain==='T4'&&tSub==='b') { stage='ⅣB 期'; desc='T4b 任何N M0'; }
-                else if (tMain==='T4'&&tSub==='a') { stage='ⅣA 期'; desc='T4a 任何N M0'; }
-                else if ((tMain==='T1'||tMain==='T2'||tMain==='T3') && nIsN1b) { stage='ⅣA 期'; desc='T1-3 N1b M0'; }
-                else if ((tMain==='T1'||tMain==='T2'||tMain==='T3') && nIsN1a) { stage='Ⅲ 期'; desc='T1-3 N1a M0'; }
-                else if ((tMain==='T2'||tMain==='T3') && nIsN0) { stage='Ⅱ 期'; desc='T2-3 N0 M0'; }
-                else if (tMain==='T1' && nIsN0) { stage='Ⅰ 期'; desc='T1 N0 M0'; }
-                else { stage='组合校验'; desc=''; }
-            } else if (hist === 'ATC') {
-                const tMain = tParsed.main, tSub = tParsed.sub;
-                const nIsN0 = (nVal==='N0'), nIsN1 = (nVal==='N1a'||nVal==='N1b');
-                if (isM1) { stage='ⅣC 期'; desc='远处转移（M1）'; }
-                else if ((tMain==='T3'&&tSub==='b')||tMain==='T4') { stage='ⅣB 期'; desc='T3b/T4 任何N M0'; }
-                else if ((tMain==='T1'||tMain==='T2'||(tMain==='T3'&&tSub==='a')) && nIsN1) { stage='ⅣB 期'; desc='T1-3a N1 M0'; }
-                else if ((tMain==='T1'||tMain==='T2'||(tMain==='T3'&&tSub==='a')) && nIsN0) { stage='ⅣA 期'; desc='T1-3a N0 M0'; }
-                else { stage='Ⅳ期'; desc='未分化癌（ATC）'; }
-            }
-            return { stage, desc, tnm: tnmShort };
-        }
-
-        // 生成管理建议（全部中文术语优先，括号英文）
-        function generateManagementHTML() {
-            const hist = histologySelect.value;
-            const age = ageGroupSelect.value;
-            const tVal = tSelect.value;
-            const nVal = nSelect.value;
-            const mVal = mSelect.value;
-            const tParsed = parseT(tVal);
-            const isM1 = (mVal === 'M1');
-            const stageObj = computeStage();
-            const stageStr = stageObj.stage;
-
-            let riskLevel = 'low';
-            if (hist === 'DTC') {
-                if (stageStr.includes('Ⅳ') || isM1) riskLevel = 'advanced';
-                else if (stageStr.includes('Ⅲ') || (stageStr.includes('Ⅱ') && age==='≥55' && (tParsed.main==='T3' || nVal!=='N0'))) riskLevel = 'high';
-                else if (stageStr.includes('Ⅱ') || (stageStr.includes('Ⅰ') && (tParsed.main==='T2'||nVal!=='N0'))) riskLevel = 'intermediate';
-                else riskLevel = 'low';
-            } else if (hist === 'MTC') {
-                if (isM1) riskLevel = 'advanced';
-                else if (stageStr.includes('Ⅳ')||stageStr.includes('Ⅲ')) riskLevel = 'high';
-                else if (stageStr.includes('Ⅱ')) riskLevel = 'intermediate';
-                else riskLevel = 'low';
-            } else { riskLevel = 'advanced'; }
-
-            let html = '';
-            html += `<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;"><span style="background:#0b2b3d; color:white; padding:6px 16px; border-radius:30px;">📊 分期: ${stageStr} · ${stageObj.desc}</span>`;
-            html += `<span style="background:#d9e6ed; padding:6px 16px; border-radius:30px;">🏷️ 风险层级: ${riskLevel==='low'?'低危':riskLevel==='intermediate'?'中危':riskLevel==='high'?'高危':'晚期/转移性'}</span></div>`;
-
-            if (hist === 'DTC') {
-                if (riskLevel === 'low') {
-                    html += `<h4>💊 用药计划 · 促甲状腺素（TSH）抑制</h4><ul><li><span class="highlight">促甲状腺素（TSH）目标</span>: 0.5–2.0 mU/L（正常低限即可，无需严格抑制）。</li><li>左甲状腺素（L-T4）替代治疗，调整剂量后4-6周复查甲状腺功能。</li></ul>`;
-                    html += `<h4>🩺 随访与复查指标</h4><ul><li><strong>颈部超声</strong>: 术后6-12个月首次，后每年一次至5年。</li><li><strong>甲状腺球蛋白（Tg）+ 甲状腺球蛋白抗体（TgAb）</strong>: 每6-12个月检测，稳定后每年一次。</li><li>若甲状腺球蛋白（Tg）持续＜0.2 ng/mL且超声阴性，属于疗效满意。</li></ul>`;
-                    html += `<h4>🔄 如何调整用药</h4><ul><li>若长期（＞5年）无复发迹象，促甲状腺素（TSH）可放宽至正常范围（0.5–2.5 mU/L）。</li><li>甲状腺球蛋白（Tg）升高或超声可疑 → 加强抑制（促甲状腺素TSH 0.1–0.5 mU/L）并进一步检查。</li></ul>`;
-                } else if (riskLevel === 'intermediate') {
-                    html += `<h4>💊 用药计划</h4><ul><li><span class="highlight">促甲状腺素（TSH）抑制目标</span>: 0.1–0.5 mU/L。</li><li>多数患者推荐术后放射性碘（RAI）清甲治疗。</li><li>左甲状腺素（L-T4）剂量根据促甲状腺素（TSH）精细调整。</li></ul>`;
-                    html += `<h4>🩺 随访计划</h4><ul><li>术后6个月行颈部超声、甲状腺球蛋白（Tg）/甲状腺球蛋白抗体（TgAb）。</li><li>高危特征者9-12个月后行诊断性全身显像（Dx-WBS）。</li><li>若疗效满意，可逐渐放宽促甲状腺素（TSH）至0.5 mU/L左右。</li></ul>`;
-                    html += `<h4>📈 指标调整策略</h4><ul><li>甲状腺球蛋白（Tg）持续可测但稳定 → 维持抑制，缩短复查间隔。</li><li>甲状腺球蛋白（Tg）上升或新发淋巴结 → 影像学评估，必要时二次手术/放射性碘（RAI）。</li></ul>`;
-                } else if (riskLevel === 'high') {
-                    html += `<h4>💊 强化促甲状腺素（TSH）抑制</h4><ul><li><span class="highlight">促甲状腺素（TSH）＜0.1 mU/L</span>（注意监测心脏及骨骼风险）。</li><li>常规行放射性碘（RAI）治疗，部分需多次放射性碘（RAI）。</li></ul>`;
-                    html += `<h4>🩺 密切随访</h4><ul><li>术后3个月即开始复查（超声+甲状腺球蛋白Tg）。</li><li>每6个月评估，必要时正电子发射断层扫描（PET-CT）寻找病灶。</li><li>若达“疗效满意”，促甲状腺素（TSH）可升至0.1–0.5 mU/L。</li></ul>`;
-                    html += `<div class="note-box">⚠️ 若出现结构性复发，需多学科会诊考虑手术/外放疗/靶向治疗。</div>`;
-                } else if (riskLevel === 'advanced') {
-                    html += `<h4>🧬 晚期/转移性分化型甲状腺癌（DTC）</h4><ul><li>优先行基因检测（RET、NTRK、BRAF等）。</li><li><strong>靶向治疗</strong>: RET融合→普拉替尼；NTRK融合→拉罗替尼；无突变→仑伐替尼/索拉非尼。</li><li>促甲状腺素（TSH）在不引起甲亢前提下尽量抑制。</li></ul>`;
-                    html += `<h4>📋 随访重点</h4><ul><li>每2-3个月影像评估疗效，监测血压、蛋白尿等靶向药副作用。</li></ul>`;
-                }
-            } else if (hist === 'MTC') {
-                html += `<h4>🧪 核心标志物</h4><ul><li>降钙素（Ctn）、癌胚抗原（CEA）是随访关键。</li><li>术后降钙素（Ctn）倍增时间提示预后。</li></ul>`;
-                if (riskLevel === 'low' || riskLevel === 'intermediate') {
-                    html += `<h4>💊 甲状腺素替代</h4><ul><li>仅需替代治疗，无需促甲状腺素（TSH）抑制（TSH正常低限）。</li></ul>`;
-                    html += `<h4>📅 随访</h4><ul><li>每6-12个月测降钙素（Ctn）/癌胚抗原（CEA）+颈部超声。</li><li>降钙素（Ctn）升高需寻找复发/转移。</li></ul>`;
-                } else if (riskLevel === 'high') {
-                    html += `<h4>🎯 高危甲状腺髓样癌（MTC）</h4><ul><li>术后降钙素（Ctn）未降至正常范围，需更频繁监测。</li><li>若进展，推荐RET突变检测：塞尔帕替尼/普拉替尼。</li><li>多靶点酪氨酸激酶抑制剂（TKI）：卡博替尼、凡德他尼、安罗替尼。</li></ul>`;
-                } else {
-                    html += `<h4>🌐 晚期甲状腺髓样癌（MTC）</h4><ul><li>系统性靶向治疗为主，参照基因检测结果。</li><li>局部治疗（放疗/介入）缓解症状。</li></ul>`;
-                }
-            } else {
-                html += `<h4>⚡ 未分化癌（ATC）· 紧急处理</h4><ul><li>立即检测BRAF V600E突变。</li><li>突变阳性：达拉非尼+曲美替尼。</li><li>免疫联合治疗（临床试验）带来希望。</li><li>多学科协作（手术/放疗/化疗/靶向）。</li></ul>`;
-                html += `<div class="note-box">所有未分化癌（ATC）均为Ⅳ期，快速启动治疗是核心。</div>`;
-            }
-
-            html += `<div style="margin-top:18px; border-top:1px dashed #abcad6; padding-top:14px;"><strong>📌 动态调整原则（2025）</strong><br>根据治疗反应（疗效满意/生化不全/结构不全）调整促甲状腺素（TSH）抑制强度及随访间隔。若持续疗效满意，可逐渐降低抑制强度并延长复查周期。</div>`;
-            return html;
-        }
-
-        function updateAll() {
-            const stageObj = computeStage();
-            stageDisplay.textContent = stageObj.stage;
-            stageDesc.textContent = stageObj.desc;
-            tnmSummary.textContent = stageObj.tnm;
-
-            managementPanel.innerHTML = generateManagementHTML();
-
-            const resultDiv = document.querySelector('.stage-result');
-            if (stageObj.stage.includes('Ⅳ')) resultDiv.style.background = 'linear-gradient(105deg, #f5e6e8 0%, #f0d9dd 100%)';
-            else if (stageObj.stage.includes('Ⅲ')) resultDiv.style.background = 'linear-gradient(105deg, #fdefe0 0%, #f8e2cf 100%)';
-            else resultDiv.style.background = 'linear-gradient(105deg, #e2f0f5 0%, #d4e9ef 100%)';
-
-            if(expanded) {
-                collapseContent.style.maxHeight = collapseContent.scrollHeight + 200 + "px";
-            }
-        }
-
-        function toggleAgeField() {
-            ageGroupSelect.disabled = (histologySelect.value !== 'DTC');
-            updateAll();
-        }
-
-        function resetToTypical() {
-            histologySelect.value = 'DTC';
-            ageGroupSelect.value = '<55';
-            tSelect.value = 'T1a';
-            nSelect.value = 'N0';
-            mSelect.value = 'M0';
-            toggleAgeField();
-        }
-
-        histologySelect.addEventListener('change', toggleAgeField);
-        ageGroupSelect.addEventListener('change', updateAll);
-        tSelect.addEventListener('change', updateAll);
-        nSelect.addEventListener('change', updateAll);
-        mSelect.addEventListener('change', updateAll);
-        document.getElementById('resetDefaultBtn').addEventListener('click', resetToTypical);
-
-        // 初始化
-        toggleAgeField();
-        collapseContent.style.maxHeight = '0';
-        expanded = false;
-        updateAll();
-    })();
+(function(){
+  let lang='zh';
+  let explainVisible=false;
+  const $=id=>document.getElementById(id);
+  const optionData={
+    histology:[{v:'DTC',zh:'分化型癌（DTC）· 乳头状/滤泡状',en:'Differentiated thyroid cancer (DTC) · Papillary/Follicular'},{v:'MTC',zh:'甲状腺髓样癌（MTC）',en:'Medullary thyroid cancer (MTC)'},{v:'ATC',zh:'未分化癌（ATC）',en:'Anaplastic thyroid cancer (ATC)'}],
+    ageGroup:[{v:'<55',zh:'＜55 岁',en:'<55 years'},{v:'≥55',zh:'≥55 岁',en:'≥55 years'}],
+    tStage:[{v:'T1a',zh:'T1a（≤1 cm，局限于甲状腺内）',en:'T1a (≤1 cm, intrathyroidal)'},{v:'T1b',zh:'T1b（＞1–2 cm，局限于甲状腺内）',en:'T1b (>1–2 cm, intrathyroidal)'},{v:'T2',zh:'T2（＞2–4 cm，局限于甲状腺内）',en:'T2 (>2–4 cm, intrathyroidal)'},{v:'T3a',zh:'T3a（＞4 cm，局限于甲状腺内）',en:'T3a (>4 cm, intrathyroidal)'},{v:'T3b',zh:'T3b（任何大小，侵犯带状肌）',en:'T3b (gross strap muscle invasion)'},{v:'T4a',zh:'T4a（侵犯皮下/喉/气管/食管/喉返神经）',en:'T4a (invades subcutaneous tissue/larynx/trachea/esophagus/RLN)'},{v:'T4b',zh:'T4b（侵犯椎前筋膜/包绕颈动脉/纵隔血管）',en:'T4b (prevertebral fascia/carotid encasement/mediastinal vessels)'}],
+    nStage:[{v:'N0',zh:'N0（无区域淋巴结转移）',en:'N0 (no regional nodal metastasis)'},{v:'N1a',zh:'N1a（Ⅵ区/Ⅶ区淋巴结转移）',en:'N1a (level VI/VII nodes)'},{v:'N1b',zh:'N1b（侧颈部/咽后淋巴结转移）',en:'N1b (lateral neck/retropharyngeal nodes)'}],
+    mStage:[{v:'M0',zh:'M0（无远处转移）',en:'M0 (no distant metastasis)'},{v:'M1',zh:'M1（有远处转移）',en:'M1 (distant metastasis)'}],
+    surgeryPlan:[{v:'notSelected',zh:'未选择/待 MDT 确认',en:'Not selected / pending MDT confirmation'},{v:'activeSurveillance',zh:'主动监测：cT1a ≤1 cm、cN0、M0、低危',en:'Active surveillance: cT1a ≤1 cm, cN0, M0, low-risk'},{v:'lobectomy',zh:'腺叶切除±峡部：≤4 cm、局限、cN0 低危 DTC',en:'Lobectomy ± isthmusectomy: ≤4 cm, confined, cN0 low-risk DTC'},{v:'totalThyroidectomy',zh:'全/近全甲状腺切除：>4 cm、T3/T4、N1、M1 或高危',en:'Total/near-total thyroidectomy: >4 cm, T3/T4, N1, M1, or high-risk'},{v:'centralDissection',zh:'中央区清扫：临床 N1a 或治疗性清扫',en:'Central neck dissection: clinical N1a or therapeutic dissection'},{v:'lateralDissection',zh:'侧颈清扫：临床 N1b',en:'Lateral neck dissection: clinical N1b'},{v:'invasiveResection',zh:'侵犯结构切除/气道评估：T4a/T4b',en:'Resection of invaded structures / airway assessment: T4a/T4b'},{v:'unresectablePalliative',zh:'不可切除/姑息/系统治疗路径',en:'Unresectable / palliative / systemic-therapy pathway'}]
+  };
+  const labels={
+    zh:{title:'甲状腺癌 AJCC8 分期与随访用药参考工具',version:'AJCC第8版 · 随访/用药数值版 · 中英双语',subhead:'正文表格只显示目标值、检查项目和时间点；解释说明默认隐藏，可单独显示。治疗方案需由临床团队确认。',langBtn:'🌐 English',explainShow:'👁️ 显示解释',explainHide:'🙈 隐藏解释',printBtn:'🖨️ 打印报告',copyBtn:'📄 复制摘要',resetBtn:'↻ 重置',histologyLabel:'🧬 病理类型',ageLabel:'🎂 诊断年龄（仅DTC）',tLabel:'📏 原发肿瘤（T）',nLabel:'🔬 区域淋巴结（N）',mLabel:'🌍 远处转移（M）',surgeryLabel:'🔪 手术方式/路径',stageBadge:'🎯 当前分期',interpretTitle:'当前结果',clinicalHeader:'📋 随访、用药、手术路径',rulesHeader:'📌 AJCC8 分期规则与限制',tnm:'TNM',risk:'参考层级',surgery:'手术路径',chosenSurgery:'已选路径',printMeta:'打印时间',riskLevels:{low:'低危参考',intermediate:'中危参考',high:'高危参考',advanced:'晚期/转移性参考'},footnote:'仅供专业参考；不替代医生判断、MDT、当地药品说明书或最新指南。',sourceTitle:'参考依据与适用范围',sourceNote:'DTC 随访/TSH 内容优先参考 2025 ATA DTC 更新；MTC 参考 ATA MTC 指南工具；ATC 参考 ATA ATC 指南工具和 NCCN 2025 甲状腺癌更新摘要。'},
+    en:{title:'Thyroid Cancer AJCC8 Staging, Follow-up and Medication Reference Tool',version:'AJCC 8th · Numeric follow-up/medication version · Bilingual',subhead:'Main tables show targets, tests, and time intervals only; explanatory notes are hidden by default and can be toggled separately. Clinical confirmation is required.',langBtn:'🌐 中文',explainShow:'👁️ Show explanations',explainHide:'🙈 Hide explanations',printBtn:'🖨️ Print report',copyBtn:'📄 Copy summary',resetBtn:'↻ Reset',histologyLabel:'🧬 Histology',ageLabel:'🎂 Age at diagnosis (DTC only)',tLabel:'📏 Primary tumor (T)',nLabel:'🔬 Regional nodes (N)',mLabel:'🌍 Distant metastasis (M)',surgeryLabel:'🔪 Surgery / pathway',stageBadge:'🎯 Current stage',interpretTitle:'Current result',clinicalHeader:'📋 Follow-up, medication, and surgery pathway',rulesHeader:'📌 AJCC8 staging rules and limits',tnm:'TNM',risk:'Reference tier',surgery:'Surgery pathway',chosenSurgery:'Selected pathway',printMeta:'Printed at',riskLevels:{low:'Low-risk reference',intermediate:'Intermediate-risk reference',high:'High-risk reference',advanced:'Advanced/metastatic reference'},footnote:'Professional reference only; does not replace clinician judgment, MDT review, local drug labels, or current guidelines.',sourceTitle:'Sources and scope',sourceNote:'DTC follow-up/TSH content prioritizes the 2025 ATA DTC update; MTC references ATA MTC guideline tools; ATC references ATA ATC guideline tools and NCCN 2025 thyroid carcinoma update summary.'}
+  };
+  const refs={
+    zh:[['美国癌症协会：AJCC8 甲状腺癌分期','https://www.cancer.org/cancer/types/thyroid-cancer/detection-diagnosis-staging/staging.html'],['2025 ATA 成人分化型甲状腺癌指南','https://journals.sagepub.com/doi/pdf/10.1177/10507256251363120'],['ATA 2025 DTC 快速参考工具','https://eguideline.guidelinecentral.com/ata-guidelines-tools/adults-with-differentiated-thyroid-cancer-2025-update'],['ATA MTC 指南工具','https://eguideline.guidelinecentral.com/i/540772-medullary-thyroid-carcinoma'],['ATA ATC 指南工具','https://www.guidelinecentral.com/guideline/7119/'],['NCCN 2025 甲状腺癌更新摘要','https://jnccn.org/view/journals/jnccn/23/7/article-e250033.xml']],
+    en:[['American Cancer Society: AJCC8 thyroid cancer staging','https://www.cancer.org/cancer/types/thyroid-cancer/detection-diagnosis-staging/staging.html'],['2025 ATA adult DTC guideline','https://journals.sagepub.com/doi/pdf/10.1177/10507256251363120'],['ATA 2025 DTC quick-reference tool','https://eguideline.guidelinecentral.com/ata-guidelines-tools/adults-with-differentiated-thyroid-cancer-2025-update'],['ATA MTC guideline tool','https://eguideline.guidelinecentral.com/i/540772-medullary-thyroid-carcinoma'],['ATA ATC guideline tool','https://www.guidelinecentral.com/guideline/7119/'],['NCCN 2025 thyroid carcinoma update summary','https://jnccn.org/view/journals/jnccn/23/7/article-e250033.xml']]
+  };
+  function parseT(t){if(t==='T1a')return{main:'T1',sub:'a',cm:'≤1 cm'}; if(t==='T1b')return{main:'T1',sub:'b',cm:'>1–2 cm'}; if(t==='T2')return{main:'T2',sub:'',cm:'>2–4 cm'}; if(t==='T3a')return{main:'T3',sub:'a',cm:'>4 cm'}; if(t==='T3b')return{main:'T3',sub:'b',cm:'strap muscle invasion'}; if(t==='T4a')return{main:'T4',sub:'a',cm:'T4a'}; return{main:'T4',sub:'b',cm:'T4b'};}
+  function computeStage(){const hist=$('histology').value,age=$('ageGroup').value,tVal=$('tStage').value,nVal=$('nStage').value,mVal=$('mStage').value,t=parseT(tVal),isM1=mVal==='M1';let stage='',desc='';
+    if(hist==='DTC'){if(age==='<55'){stage=isM1?'Ⅱ 期':'Ⅰ 期';desc=isM1?'M1':'M0';}else{const anyN1=nVal==='N1a'||nVal==='N1b'; if(isM1){stage='ⅣB 期';desc='M1';}else if(t.main==='T4'&&t.sub==='b'){stage='ⅣA 期';desc='T4b any N M0';}else if(t.main==='T4'&&t.sub==='a'){stage='Ⅲ 期';desc='T4a any N M0';}else if(t.main==='T3'){stage='Ⅱ 期';desc=`${tVal} any N M0`;}else if((t.main==='T1'||t.main==='T2')&&anyN1){stage='Ⅱ 期';desc=`${tVal} N1 M0`;}else{stage='Ⅰ 期';desc=`${tVal} N0 M0`;}}}
+    else if(hist==='MTC'){if(isM1){stage='ⅣC 期';desc='M1';}else if(t.main==='T4'&&t.sub==='b'){stage='ⅣB 期';desc='T4b any N M0';}else if(t.main==='T4'&&t.sub==='a'){stage='ⅣA 期';desc='T4a any N M0';}else if(nVal==='N1b'){stage='ⅣA 期';desc='N1b M0';}else if(nVal==='N1a'){stage='Ⅲ 期';desc='N1a M0';}else if(t.main==='T2'||t.main==='T3'){stage='Ⅱ 期';desc=`${tVal} N0 M0`;}else{stage='Ⅰ 期';desc='T1 N0 M0';}}
+    else{if(isM1){stage='ⅣC 期';desc='M1';}else if((t.main==='T3'&&t.sub==='b')||t.main==='T4'||nVal!=='N0'){stage='ⅣB 期';desc='T3b/T4 or N1 M0';}else{stage='ⅣA 期';desc='T1–T3a N0 M0';}}
+    return{stage,desc,tnm:`${tVal} ${nVal} ${mVal}`};}
+  function computeRisk(s){const hist=$('histology').value,t=parseT($('tStage').value),n=$('nStage').value,m=$('mStage').value;if(hist==='ATC')return'advanced'; if(m==='M1'||s.stage.includes('Ⅳ'))return'advanced'; if(hist==='MTC'){if(s.stage.includes('Ⅲ'))return'high'; if(s.stage.includes('Ⅱ'))return'intermediate'; return'low';} if(s.stage.includes('Ⅲ')||t.main==='T4')return'high'; if(n!=='N0'||t.main==='T3'||s.stage.includes('Ⅱ'))return'intermediate'; return'low';}
+  function getText(id){const sel=$(id);return sel.options[sel.selectedIndex].textContent;}
+  function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+  function table(title,headers,rows,note,wide=false){
+    const esc=escapeHtml;
+    const head=headers.map(h=>`<th>${esc(h)}</th>`).join('');
+    const body=rows.map(r=>`<tr>${r.map((c,i)=>{const v=esc(c);return `<td>${i===1?'<span class="main-value">':''}${v}${i===1?'</span>':''}</td>`;}).join('')}</tr>`).join('');
+    return `<div class="mini-card ${wide?'full':''}"><h3>${esc(title)}</h3><table class="data-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>${note?`<div class="small-note explain">${esc(note)}</div>`:''}</div>`;
+  }
+  function card(title,items,note='',extra=''){
+    const esc=escapeHtml;
+    return `<div class="mini-card ${extra}"><h3>${esc(title)}</h3><ul>${items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>${note?`<div class="small-note explain">${esc(note)}</div>`:''}</div>`;
+  }
+  function surgeryRows(){const hist=$('histology').value,t=$('tStage').value,n=$('nStage').value,m=$('mStage').value; if(lang==='zh')return [
+    ['主动监测','cT1a ≤1 cm + cN0 + M0','颈部超声：6个月×前2年；之后12–24个月'],
+    ['腺叶切除±峡部','DTC：≤4 cm + 局限 + cN0','术后病理/Tg/TgAb：6–12周首次'],
+    ['全/近全甲状腺切除','>4 cm 或 T3/T4 或 N1 或 M1','术后TSH/FT4：6–8周；Tg/TgAb：6–12周'],
+    ['中央区清扫','临床N1a；治疗性清扫','术后钙/甲旁腺激素：24–48小时内；按结果复测'],
+    ['侧颈清扫','临床N1b','术后影像/声带/钙代谢：按术后0–12周路径'],
+    ['侵犯结构/不可切除路径','T4a/T4b 或 ATC 或快速进展','气道评估：当天；MDT：≤1周；基因检测：尽快']
+  ]; return [
+    ['Active surveillance','cT1a ≤1 cm + cN0 + M0','Neck US: every 6 months for 2 years; then every 12–24 months'],
+    ['Lobectomy ± isthmusectomy','DTC: ≤4 cm + confined + cN0','Pathology/Tg/TgAb: first check at 6–12 weeks'],
+    ['Total/near-total thyroidectomy','>4 cm or T3/T4 or N1 or M1','TSH/FT4: 6–8 weeks; Tg/TgAb: 6–12 weeks'],
+    ['Central neck dissection','Clinical N1a; therapeutic dissection','Calcium/PTH: within 24–48 hours; repeat per result'],
+    ['Lateral neck dissection','Clinical N1b','Imaging/vocal cord/calcium pathway: postoperative 0–12 weeks'],
+    ['Invasive/unresectable pathway','T4a/T4b or ATC or rapid progression','Airway: same day; MDT: ≤1 week; molecular testing: ASAP']
+  ];}
+  function dtcMedicationRows(risk){const surgery=$('surgeryPlan').value; const advanced=risk==='advanced'; if(lang==='zh'){
+    if(advanced)return [['LT4/TSH','<0.1 mU/L；不能耐受时 0.1–0.5 mU/L','TSH/FT4：调剂后6–8周；稳定后3–6个月'],['影像疗效','CT/MRI/PET-CT：8–12周','系统治疗期每8–12周'],['Tg/TgAb','每3–6个月','进展期或治疗调整期']];
+    if(risk==='high')return [['LT4/TSH','<0.1 mU/L','TSH/FT4：调剂后6–8周；前2年每3–6个月'],['Tg/TgAb','每3–6个月','前2年；稳定后6–12个月'],['颈部超声','6–12个月首次；之后6–12个月','高危或可疑结果']];
+    if(risk==='intermediate')return [['LT4/TSH','0.1–0.5 mU/L','TSH/FT4：调剂后6–8周；稳定后6–12个月'],['Tg/TgAb','每6–12个月','前2年；可疑时缩短至3–6个月'],['颈部超声','术后6–12个月首次；之后12–24个月','按Tg/TgAb和影像结果']];
+    return [['LT4/TSH','0.5–2.0 mU/L','TSH/FT4：调剂后6–8周；稳定后6–12个月'],['Tg/TgAb','每6–12个月；疗效满意后12–24个月','全切±RAI路径'],['颈部超声','术后6–12个月首次；之后12–24个月','低危/阴性结果路径']];}
+    if(advanced)return [['LT4/TSH','<0.1 mU/L; 0.1–0.5 mU/L if not tolerated','TSH/FT4: 6–8 weeks after dose change; then every 3–6 months'],['Response imaging','CT/MRI/PET-CT: 8–12 weeks','Every 8–12 weeks during systemic therapy'],['Tg/TgAb','Every 3–6 months','Progressive disease or treatment-adjustment period']];
+    if(risk==='high')return [['LT4/TSH','<0.1 mU/L','TSH/FT4: 6–8 weeks after dose change; every 3–6 months for 2 years'],['Tg/TgAb','Every 3–6 months','First 2 years; then every 6–12 months if stable'],['Neck ultrasound','First at 6–12 months; then every 6–12 months','High-risk or suspicious-result pathway']];
+    if(risk==='intermediate')return [['LT4/TSH','0.1–0.5 mU/L','TSH/FT4: 6–8 weeks after dose change; then every 6–12 months'],['Tg/TgAb','Every 6–12 months','First 2 years; shorten to 3–6 months if suspicious'],['Neck ultrasound','First at 6–12 months; then every 12–24 months','According to Tg/TgAb and imaging']];
+    return [['LT4/TSH','0.5–2.0 mU/L','TSH/FT4: 6–8 weeks after dose change; then every 6–12 months'],['Tg/TgAb','Every 6–12 months; then every 12–24 months after excellent response','Total thyroidectomy ± RAI pathway'],['Neck ultrasound','First at 6–12 months; then every 12–24 months','Low-risk/negative-result pathway']];}
+  function mtcRows(){if(lang==='zh')return [['LT4/TSH','0.5–4.0 mU/L 或本实验室正常范围','TSH/FT4：调剂后6–8周；稳定后6–12个月'],['降钙素/CEA','术后2–3个月首次','建立术后基线'],['Ctn阴性/正常','Ctn+CEA：6个月×1年；之后每年','无证据复发路径'],['Ctn可测且<150 pg/mL','Ctn+CEA：每3–6个月','计算倍增时间；颈部超声每6–12个月'],['Ctn ≥150 pg/mL','颈/胸/肝/骨影像','发现后启动；之后每6–12个月或按进展']]; return [['LT4/TSH','0.5–4.0 mU/L or local reference range','TSH/FT4: 6–8 weeks after dose change; then every 6–12 months'],['Calcitonin/CEA','First at 2–3 months post-op','Postoperative baseline'],['Ctn undetectable/normal','Ctn+CEA: every 6 months for 1 year; then annually','No-evidence-of-disease pathway'],['Detectable Ctn <150 pg/mL','Ctn+CEA: every 3–6 months','Calculate doubling time; neck US every 6–12 months'],['Ctn ≥150 pg/mL','Neck/chest/liver/bone imaging','Start once detected; then every 6–12 months or per progression']];}
+  function atcRows(){if(lang==='zh')return [['气道/声带/吞咽','当天','初诊或症状变化当天'],['BRAF V600E/分子检测','尽快；目标≤7天','诊断同时送检'],['CT/MRI/PET-CT','基线；治疗中6–8周','局部/远处病灶评估'],['BRAF V600E阳性治疗评估','达拉非尼+曲美替尼路径','用药前；之后每2–4周毒性评估'],['LT4/TSH','0.5–4.0 mU/L 或本实验室正常范围','调剂后6–8周；稳定后6–12个月']]; return [['Airway/vocal cord/swallowing','Same day','At presentation or symptom change'],['BRAF V600E/molecular testing','ASAP; target ≤7 days','Send at diagnosis'],['CT/MRI/PET-CT','Baseline; every 6–8 weeks on treatment','Local/distant disease assessment'],['BRAF V600E-positive therapy review','Dabrafenib + trametinib pathway','Before treatment; toxicity review every 2–4 weeks'],['LT4/TSH','0.5–4.0 mU/L or local reference range','6–8 weeks after dose change; then every 6–12 months']];}
+  function raiRows(risk){if(lang==='zh'){
+    if(risk==='low')return [['RAI','不常规','术后6–12周完成初评后决定'],['Tg阈值','Tg<0.2 ng/mL（全切+RAI+TgAb阴性路径）','术后6–12个月评估'],['TgAb','同步检测','每次Tg检测同时']];
+    if(risk==='intermediate')return [['RAI','选择性考虑','术后6–12周完成病理/Tg/影像后'],['诊断性全身显像','9–12个月','高危特征或Tg/TgAb异常'],['TgAb','同步检测','每次Tg检测同时']];
+    return [['RAI','通常考虑/推荐路径','术后6–12周完成病理/Tg/影像后'],['诊断性全身显像','6–12个月','RAI后或Tg/TgAb异常'],['FDG PET/CT','Tg升高且RAI阴性时','按3–6个月进展节奏']];}
+    if(risk==='low')return [['RAI','Not routine','Decide after 6–12 week postoperative assessment'],['Tg threshold','Tg <0.2 ng/mL (TT + RAI + TgAb-negative pathway)','Assess at 6–12 months'],['TgAb','Measure together','With each Tg test']];
+    if(risk==='intermediate')return [['RAI','Selective consideration','After pathology/Tg/imaging at 6–12 weeks'],['Diagnostic whole-body scan','9–12 months','High-risk features or abnormal Tg/TgAb'],['TgAb','Measure together','With each Tg test']];
+    return [['RAI','Usually considered/recommended pathway','After pathology/Tg/imaging at 6–12 weeks'],['Diagnostic whole-body scan','6–12 months','After RAI or abnormal Tg/TgAb'],['FDG PET/CT','Rising Tg with negative RAI imaging','Per 3–6 month progression tempo']];}
+  function managementHTML(stageObj,risk){const hist=$('histology').value; const l=lang==='zh'; let html='<div class="panel-grid">';
+    html+=table(l?'🔪 手术方式选择':'🔪 Surgery pathway',[l?'路径':'Pathway',l?'适用数值':'Numeric criteria',l?'时间点':'Timing'],surgeryRows(),l?'手术方式不改变AJCC分期；它改变Tg/TgAb解释、RAI路径和随访间隔。':'Surgery does not change AJCC stage; it changes Tg/TgAb interpretation, RAI pathway, and follow-up intervals.',true);
+    if(hist==='DTC'){
+      html+=table(l?'💊 DTC：LT4/TSH 与随访时间':'💊 DTC: LT4/TSH and follow-up timing',[l?'项目':'Item',l?'目标值/时间':'Target/time',l?'复查间隔':'Interval'],dtcMedicationRows(risk),l?'2025 ATA DTC 更新强调：低/中危且无生化或结构复发证据时，长期低于参考范围的TSH抑制不作为常规；TSH目标需随治疗反应和心骨风险调整。':'The 2025 ATA DTC update emphasizes that long-term below-reference TSH suppression is not routine for low/intermediate-risk patients without biochemical or structural recurrence; targets are adjusted by response and cardiac/bone risk.');
+      html+=table(l?'🧪 DTC：RAI / Tg / TgAb':'🧪 DTC: RAI / Tg / TgAb',[l?'项目':'Item',l?'数值/路径':'Value/pathway',l?'时间点':'Timing'],raiRows(risk),l?'Tg数值必须与术式、RAI状态、TgAb阴性/阳性和TSH状态一起解释。':'Tg values must be interpreted with surgery type, RAI status, TgAb status, and TSH status.');
+    } else if(hist==='MTC') {
+      html+=table(l?'💊 MTC：LT4、降钙素、CEA':'💊 MTC: LT4, calcitonin, CEA',[l?'项目':'Item',l?'目标值/阈值':'Target/threshold',l?'复查时间':'Timing'],mtcRows(),l?'MTC不使用TSH抑制作为抗肿瘤治疗；降钙素和CEA倍增时间用于复发/进展节奏判断。':'MTC does not use TSH suppression as antitumor therapy; calcitonin and CEA doubling times help define recurrence/progression tempo.',true);
+    } else {
+      html+=table(l?'⚡ ATC：紧急评估、用药、复查':'⚡ ATC: urgent assessment, treatment, review',[l?'项目':'Item',l?'目标值/时间':'Target/time',l?'复查间隔':'Interval'],atcRows(),l?'ATC以气道安全、快速分子检测、可切除性和全身治疗窗口为核心；具体药物需按适应证和当地批准情况执行。':'ATC management centers on airway safety, rapid molecular testing, resectability, and systemic-therapy window; drugs must match indication and local approval.',true);
+    }
+    const safety = l?['TSH <0.1 mU/L：房颤/骨质疏松高风险者需单独评估。','有声音嘶哑、呼吸困难、吞咽困难、快速增大的颈部肿块：当天评估。','靶向药/免疫治疗：血压、肝肾功能、皮疹、腹泻、QT间期按药品说明书监测。']:['TSH <0.1 mU/L: separate assessment for atrial fibrillation/osteoporosis risk.','Hoarseness, dyspnea, dysphagia, or rapidly enlarging neck mass: same-day assessment.','Targeted/immunotherapy: monitor BP, liver/renal function, rash, diarrhea, and QT interval per drug label.'];
+    html+=card(l?'⚠️ 安全边界':'⚠️ Safety boundaries',safety,l?'这些属于风险提示，不是自动医嘱。':'These are risk prompts, not automatic medical orders.','danger-box');
+    html+='</div>'; return html;}
+  function rulesHTML(){if(lang==='zh')return `<div class="panel-grid">${card('DTC 分期',['＜55岁：M0=Ⅰ期；M1=Ⅱ期。','≥55岁：T1–2 N0 M0=Ⅰ期；T1–2 N1或T3任何N M0=Ⅱ期；T4a=Ⅲ期；T4b=ⅣA期；M1=ⅣB期。'],'AJCC8是解剖分期，不等同ATA复发风险。')}${card('MTC 分期',['T1 N0 M0=Ⅰ期。','T2–3 N0 M0=Ⅱ期。','T1–3 N1a M0=Ⅲ期。','T4a或N1b=ⅣA期；T4b=ⅣB期；M1=ⅣC期。'],'MTC不使用DTC年龄分层。')}${card('ATC 分期',['所有ATC均为Ⅳ期。','T1–3a N0 M0=ⅣA。','T3b/T4或N1 M0=ⅣB；M1=ⅣC。'],'ATC需要紧急MDT和分子检测。')}${card('未覆盖字段',['TX、T0、NX、N0a/N0b。','结外侵犯、淋巴结数量/大小、分子分型。','临床分期与病理分期差异。'],'输入不完整时应人工核实。','warn-box')}</div>`;
+    return `<div class="panel-grid">${card('DTC staging',['Age <55: M0=stage I; M1=stage II.','Age ≥55: T1–2 N0 M0=stage I; T1–2 N1 or T3 any N M0=stage II; T4a=stage III; T4b=stage IVA; M1=stage IVB.'],'AJCC8 is anatomic staging, not ATA recurrence-risk stratification.')}${card('MTC staging',['T1 N0 M0=stage I.','T2–3 N0 M0=stage II.','T1–3 N1a M0=stage III.','T4a or N1b=stage IVA; T4b=stage IVB; M1=stage IVC.'],'DTC age stratification does not apply to MTC.')}${card('ATC staging',['All ATC is stage IV.','T1–3a N0 M0=IVA.','T3b/T4 or N1 M0=IVB; M1=IVC.'],'ATC requires urgent MDT and molecular testing.')}${card('Not covered',['TX, T0, NX, N0a/N0b.','Extranodal extension, number/size of nodes, molecular subtype.','Clinical vs pathologic staging differences.'],'Incomplete inputs require manual verification.','warn-box')}</div>`;}
+  function interpretation(stageObj,risk){const l=labels[lang]; if(lang==='zh')return [`AJCC8：${stageObj.stage}。`,`TNM：${stageObj.tnm}。`,`${l.risk}：${l.riskLevels[risk]}。`,`${l.chosenSurgery}：${getText('surgeryPlan')}。`]; return [`AJCC8: ${stageObj.stage}.`,`TNM: ${stageObj.tnm}.`,`${l.risk}: ${l.riskLevels[risk]}.`,`${l.chosenSurgery}: ${getText('surgeryPlan')}.`];}
+  function populateOptions(){Object.keys(optionData).forEach(id=>{const sel=$(id),cur=sel.value; sel.innerHTML=optionData[id].map(o=>`<option value="${o.v}">${o[lang]}</option>`).join(''); if(cur) sel.value=cur;});}
+  function updateStatic(){const l=labels[lang]; document.documentElement.lang=lang==='zh'?'zh-CN':'en'; $('title').textContent=l.title; $('versionBadge').textContent=l.version; $('subhead').textContent=l.subhead; $('langBtn').textContent=l.langBtn; $('explainBtn').textContent=explainVisible?l.explainHide:l.explainShow; $('explainBtn').classList.toggle('secondary-on',explainVisible); ['printBtn','copyBtn','resetBtn','histologyLabel','ageLabel','tLabel','nLabel','mLabel','surgeryLabel','stageBadge','interpretTitle','clinicalHeader','rulesHeader','footnote'].forEach(id=>{$(id).textContent=l[id];}); $('referencesBox').innerHTML=`<strong>${l.sourceTitle}</strong><div style="margin-top:6px;">${l.sourceNote}</div><ul>${refs[lang].map(r=>`<li><a href="${r[1]}" target="_blank" rel="noopener">${r[0]}</a></li>`).join('')}</ul>`; document.body.classList.toggle('show-explain',explainVisible);}
+  function updateAll(){ $('ageGroup').disabled=$('histology').value!=='DTC'; const stageObj=computeStage(),risk=computeRisk(stageObj),l=labels[lang]; $('stageDisplay').textContent=stageObj.stage; $('stageDesc').textContent=stageObj.desc; $('tnmSummary').textContent=`${l.tnm}: ${stageObj.tnm}`; $('riskSummary').textContent=`${l.risk}: ${l.riskLevels[risk]}`; $('interpretList').innerHTML=interpretation(stageObj,risk).map(x=>`<li>${x}</li>`).join(''); $('stageExplain').textContent=lang==='zh'?'参考层级由本工具按分期与M状态映射，仅用于显示随访/用药模板，不等同正式复发风险分层。':'The reference tier is mapped by this tool from stage and M status only; it selects a follow-up/medication template and is not formal recurrence-risk stratification.'; $('managementPanel').innerHTML=managementHTML(stageObj,risk); $('rulesPanel').innerHTML=rulesHTML(); $('printMeta').innerHTML=`<p><strong>${l.printMeta}:</strong> ${new Date().toLocaleString(lang==='zh'?'zh-CN':'en-US')}</p><p><strong>${l.tnm}:</strong> ${stageObj.tnm} · <strong>${l.chosenSurgery}:</strong> ${getText('surgeryPlan')}</p>`; const result=$('stageResult'); if(stageObj.stage.includes('Ⅳ'))result.style.background='linear-gradient(105deg,#f7e5e8 0%,#f0d5da 100%)'; else if(stageObj.stage.includes('Ⅲ'))result.style.background='linear-gradient(105deg,#fdefe0 0%,#f8e2cf 100%)'; else result.style.background='linear-gradient(105deg,#e2f0f5 0%,#d4e9ef 100%)'; }
+  function reset(){ $('histology').value='DTC'; $('ageGroup').value='<55'; $('tStage').value='T1a'; $('nStage').value='N0'; $('mStage').value='M0'; $('surgeryPlan').value='notSelected'; updateAll();}
+  function copySummary(){const stageObj=computeStage(),risk=computeRisk(stageObj),l=labels[lang]; const text=[l.title,`${l.tnm}: ${stageObj.tnm}`,`${l.stageBadge}: ${stageObj.stage} - ${stageObj.desc}`,`${l.risk}: ${l.riskLevels[risk]}`,`${l.chosenSurgery}: ${getText('surgeryPlan')}`].join('\n'); navigator.clipboard.writeText(text).then(()=>alert(lang==='zh'?'✅ 摘要已复制':'✅ Summary copied')).catch(()=>alert(text));}
+  document.querySelectorAll('.section-header').forEach(h=>h.addEventListener('click',()=>{const t=$(h.dataset.target); t.classList.toggle('open'); h.querySelector('.collapse-icon').style.transform=t.classList.contains('open')?'rotate(180deg)':'rotate(0deg)';}));
+  ['histology','ageGroup','tStage','nStage','mStage','surgeryPlan'].forEach(id=>$(id).addEventListener('change',updateAll));
+  $('langBtn').addEventListener('click',()=>{lang=lang==='zh'?'en':'zh'; populateOptions(); updateStatic(); updateAll();});
+  $('explainBtn').addEventListener('click',()=>{explainVisible=!explainVisible; updateStatic();});
+  $('printBtn').addEventListener('click',()=>window.print()); $('copyBtn').addEventListener('click',copySummary); $('resetBtn').addEventListener('click',reset);
+  populateOptions(); updateStatic(); reset();
+})();
 </script>
 </body>
 </html>

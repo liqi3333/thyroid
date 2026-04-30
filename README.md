@@ -55,9 +55,9 @@ It now provides two separate web entry points:
 The repository currently ships these forms:
 
 - `index.html`, original PC web version
-- `mobile.html`, separate phone-optimized version
-- Release asset: `Thyroid-TNM-Tool-1.0.1.html`
-- Release asset: `Thyroid-TNM-Tool-mobile-1.0.1.html`
+- `mobile.html`, mobile web entry kept in sync with the latest bilingual follow-up build
+- Release asset: `Thyroid-TNM-Tool-2.1.0.html`
+- Release asset: `Thyroid-TNM-Tool-mobile-2.1.0.html`
 
 ## Quick Start
 
@@ -83,8 +83,8 @@ npm run build:html
 Build outputs:
 
 ```text
-dist-html/Thyroid-TNM-Tool-1.0.1.html
-dist-html/Thyroid-TNM-Tool-mobile-1.0.1.html
+dist-html/Thyroid-TNM-Tool-2.1.0.html
+dist-html/Thyroid-TNM-Tool-mobile-2.1.0.html
 ```
 
 ## Product highlights
@@ -102,14 +102,14 @@ dist-html/Thyroid-TNM-Tool-mobile-1.0.1.html
 This repository includes GitHub Actions workflows for delivery automation.
 
 - Push to `main`: build validation and upload HTML artifacts
-- Push a tag such as `v1.0.1`: generate desktop and mobile standalone HTML files, then publish them to GitHub Releases
+- Push a tag such as `v2.1.0`: generate desktop and mobile standalone HTML files, then publish them to GitHub Releases
 - GitHub Pages serves both `index.html` and `mobile.html`
 
 Example:
 
 ```bash
-git tag v1.0.1
-git push origin v1.0.1
+git tag v2.1.0
+git push origin v2.1.0
 ```
 
 ## Project structure
