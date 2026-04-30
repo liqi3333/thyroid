@@ -28,11 +28,19 @@ It now provides two separate web entry points:
 
 ## Screenshots
 
-### PC Web Version
-![Thyroid TNM Tool - PC Version](https://via.placeholder.com/800x600?text=PC+Web+Version)
+<p align="center">
+  <a href="https://liqi3333.github.io/thyroid/">
+    <img src="docs/screenshots/thyroid-pc-web.png" alt="Thyroid TNM Tool PC web screenshot" width="900" />
+  </a>
+</p>
+<p align="center"><em>PC web version</em></p>
 
-### Mobile Web Version
-![Thyroid TNM Tool - Mobile Version](https://via.placeholder.com/400x600?text=Mobile+Web+Version)
+<p align="center">
+  <a href="https://liqi3333.github.io/thyroid/mobile.html">
+    <img src="docs/screenshots/thyroid-mobile-web.png" alt="Thyroid TNM Tool mobile web screenshot" width="320" />
+  </a>
+</p>
+<p align="center"><em>Mobile web version</em></p>
 
 ## Why this project is useful
 
